@@ -1,7 +1,7 @@
 // Alunos:
 // Denner Efisio Emanuel Reis - 201735008
 // Thomas Santos - 201776034
-//  Igor Westermann Lima - 201876021
+// Igor Westermann Lima - 201876021
 
 #ifndef TAG_H_INCLUDED
 #define TAG_H_INCLUDED

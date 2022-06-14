@@ -3,7 +3,6 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
-#define BACKSLASH '\\'
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -42,7 +41,6 @@ Tag::Tag(string nome, string descricao)
 /**
  * Destrutor da class Tag
  * 
- * 
 */
 Tag::~Tag()
 {
@@ -58,9 +56,6 @@ Tag::~Tag()
 /**
  * Função Responsável por incluir novas tags na lista.
  *
- * 
- * @param string line
- * @return void
 */
 void Tag::adicionarTag(string line)
 {
@@ -113,11 +108,8 @@ void Tag::adicionarTag(string line)
 
 /**
  * Função responsável por validar a integridade da tag
- *
+ * É utilizado uma pilha para validar a tag
  * 
- * @param string nome
- * @param string descricao
- * @return boolean
 */
 bool Tag::validaTag(string nome, string descricao)
 {
@@ -184,10 +176,7 @@ bool Tag::validaTag(string nome, string descricao)
 }
 
 /**
- * Função responsável por listar todas as tags válidas armazenadas
- * 
- * 
- * @return void
+* Função responsável por listar todas as tags válidas armazenadas
 */
 void Tag::listarTagsValidas()
 {
@@ -201,10 +190,6 @@ void Tag::listarTagsValidas()
 
 /**
  * Função responsável por salvar as tags em um arquivo externo
- * 
- * 
- * @param string file
- * @return void 
 */
 void Tag::salvarTag(string file)
 {
@@ -220,9 +205,6 @@ void Tag::salvarTag(string file)
 
 /**
  * Função responsável por retornar o nome da tag
- * 
- * 
- * @return string 
 */
 string Tag::getNome()
 {
@@ -231,9 +213,6 @@ string Tag::getNome()
 
 /**
  * Função responsável por retornar a descrição da tag
- * 
- * 
- * @return string 
 */
 string Tag::getDescricao()
 {
@@ -241,11 +220,7 @@ string Tag::getDescricao()
 }
 
 /**
- * Função responsável por retornar editar o nome da tag
- * 
- * 
- * @param string nome
- * @return void 
+ * Função responsável por colocar o nome da tag
 */
 void Tag::setNome(string nome)
 {
@@ -253,11 +228,7 @@ void Tag::setNome(string nome)
 }
 
 /**
- * Função responsável por retornar editar a descrição da tag
- * 
- * 
- * @param string descricao
- * @return void 
+ * Função responsável por colocar a descrição da tag
 */
 void Tag::setDescricao(string descricao)
 {
@@ -265,11 +236,7 @@ void Tag::setDescricao(string descricao)
 }
 
 /**
- * Função responsável por passar o valor da primeira tag
- * 
- * 
- * @param Tag *tag
- * @return void 
+ * Função responsável por colocar o valor da primeira tag
 */
 void Tag::setPrimeiraTag(Tag *tag)
 {
@@ -278,9 +245,6 @@ void Tag::setPrimeiraTag(Tag *tag)
 
 /**
  * Função responsável por retornar a primeira tag
- * 
- * 
- * @return Tag *tag
 */
 Tag *Tag::getPrimeiraTag()
 {

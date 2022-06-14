@@ -47,10 +47,6 @@ void mensagemInicial()
 /**
  * Função responsável por imprimir as mensagens do arquivo main para o usuário
  *
- * 
- * @param string type
- * @param string message
- * @return void
 */
 void printMessage(string type, string message)
 {
@@ -81,9 +77,8 @@ string split(string s, int pos)
 
 /**
  * Função principal, responsável pela execução do programa
- *
  * 
- * @return int
+ * 
 */
 int main()
 {
