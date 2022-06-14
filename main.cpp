@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "tag.h"
 
 using namespace std;
 
@@ -44,6 +45,20 @@ void mensagemInicial()
 }
 
 /**
+ * Função responsável por imprimir as mensagens do arquivo main para o usuário
+ *
+ * 
+ * @param string type
+ * @param string message
+ * @return void
+*/
+void printMessage(string type, string message)
+{
+    cout << "[" << type << "]" << message << endl;
+}
+
+
+/**
  * Função responsável por separar o texto digitado(split) após cada espaço digitado
  * Recebe uma string (digitada ou pegada pelo arquivo)
  * E recebe a posição que será avaliada 
@@ -64,7 +79,101 @@ string split(string s, int pos)
     return "";
 }
 
+/**
+ * Função principal, responsável pela execução do programa
+ *
+ * 
+ * @return int
+*/
 int main()
 {
     mensagemInicial();
+
+    bool stop = false;
+    Tag *tag = new Tag();
+    while (!stop)
+    {
+        string input;
+        getline(cin, input);
+        string option = split(input, 0);
+        if (option.at(0) == ':')
+        {
+            if (option == ":d")
+            {
+                printMessage("WARNING", "Comando ainda não implementado");
+            }
+            else
+            {
+                if (option == ":c")
+                {
+                    ifstream entrada(split(input, 1));
+                    while (!entrada.eof())
+                    {
+                        string aux;
+                        getline(entrada, aux, '\n');
+                        cout << aux << endl;
+                        if (aux != "")
+                        {
+                            tag->adicionarTag(aux);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    entrada.close();
+                    printMessage("INFO", "Arquivo carregado com as definições das tags");
+                }
+                else
+                {
+                    if (option == ":o")
+                    {
+                        printMessage("INFO", "Caminho de saída especificado com sucesso");
+                    }
+                    else
+                    {
+                        if (option == ":p")
+                        {
+                            printMessage("WARNING", "Comando ainda não implementado");
+                        }
+                        else
+                        {
+                            if (option == ":a")
+                            {
+                                printMessage("INFO", "Listagem das definições formais dos autômatos.");
+                            }
+                            else
+                            {
+                                if (option == ":l")
+                                {
+                                    tag->listarTagsValidas();
+                                    printMessage("INFO", "Listagem das tags válidas realizada");
+                                }
+                                else
+                                {
+                                    if (option == ":q")
+                                    {
+                                        printMessage("INFO", "Programa finalizado com sucesso");
+                                        stop = true;
+                                    }
+                                    else
+                                    {
+                                        if (option == ":s")
+                                        {
+                                            tag->salvarTag(split(input, 1));
+                                            printMessage("INFO", "Tags armazenadas com sucesso");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            tag->adicionarTag(input);
+        }
+    }
 }
