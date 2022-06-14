@@ -1,3 +1,7 @@
+//Alunos: 
+//Denner Efisio Emanuel Reis - 201735008
+//Thomas Santos - 201776034
+
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
@@ -22,5 +26,5 @@ void mensagemInicial()
 
 int main()
 {
-    printf("Hello world");
+    mensagemInicial();
 }
