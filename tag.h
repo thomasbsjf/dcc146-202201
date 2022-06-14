@@ -1,6 +1,7 @@
-//Alunos: 
-//Denner Efisio Emanuel Reis - 201735008
-//Thomas Santos - 201776034
+// Alunos:
+// Denner Efisio Emanuel Reis - 201735008
+// Thomas Santos - 201776034
+//  Igor Westermann Lima - 201876021
 
 #ifndef TAG_H_INCLUDED
 #define TAG_H_INCLUDED
@@ -34,7 +35,7 @@ public:
     bool validaTag(string nome, string descricao);
     string getNome();
     string getDescricao();
-    Tag* getPrimeiraTag();
+    Tag *getPrimeiraTag();
 };
 
 #endif // TAG_H_INCLUDED
