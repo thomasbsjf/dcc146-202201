@@ -100,7 +100,7 @@ int main()
         {
             if (option == ":d")
             {
-                printMessage("WARNING", "Comando ainda não implementado");
+                printMessage("WARNING", "Comando ainda nao implementado");
             }
             else
             {
@@ -122,32 +122,32 @@ int main()
                         }
                     }
                     entrada.close();
-                    printMessage("INFO", "Arquivo carregado com as definições das tags");
+                    printMessage("INFO", "Arquivo carregado com as definicoes das tags");
                 }
                 else
                 {
                     if (option == ":o")
                     {
-                        printMessage("INFO", "Caminho de saída especificado com sucesso");
+                        printMessage("INFO", "Caminho de saida especificado com sucesso");
                     }
                     else
                     {
                         if (option == ":p")
                         {
-                            printMessage("WARNING", "Comando ainda não implementado");
+                            printMessage("WARNING", "Comando ainda nao implementado");
                         }
                         else
                         {
                             if (option == ":a")
                             {
-                                printMessage("INFO", "Listagem das definições formais dos autômatos.");
+                                printMessage("INFO", "Listagem das definicoes formais dos automatos.");
                             }
                             else
                             {
                                 if (option == ":l")
                                 {
                                     tag->listarTagsValidas();
-                                    printMessage("INFO", "Listagem das tags válidas realizada");
+                                    printMessage("INFO", "Listagem das tags validas realizada");
                                 }
                                 else
                                 {
