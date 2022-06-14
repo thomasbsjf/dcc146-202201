@@ -10,6 +10,10 @@
 
 using namespace std;
 
+/**
+ * Função responsável por informar as opções disponíveis no programa
+ * Informa como executar o comando desejado
+*/
 void mensagemInicial()
 {
     cout << "-------------------------------" << "Instrucoes de uso" << "---------------------------------------------" << endl;
@@ -22,6 +26,27 @@ void mensagemInicial()
     cout << ":p            -> " << "Realiza a divisao em tags da entrada informada " << "(Nao implementado)" << endl;
     cout << ":o file_name  -> " << "Especifica o caminho do arquivo de saida para a divisao em tags " << "(Nao implementado)" << endl;
     cout << ":d file_name  -> " << "Realiza a divisao em tags da string do arquivo informado " << "(Nao implementado)" << endl;
+}
+
+/**
+ * Função responsável por separar o texto digitado(split) após cada espaço digitado
+ * Recebe uma string (digitada ou pegada pelo arquivo)
+ * E recebe a posição que será avaliada 
+*/
+string split(string s, int pos)
+{
+    int i = 0;
+    stringstream ss(s);
+    string word;
+    while (ss >> word)
+    {
+        if (pos == i)
+        {
+            return word;
+        }
+        i++;
+    }
+    return "";
 }
 
 int main()
