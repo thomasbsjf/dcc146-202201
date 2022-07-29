@@ -198,7 +198,7 @@ void Tag::salvarTag(string file)
     exit.open(file);
     while (tag != nullptr)
     {
-        exit << tag->getNome() << " " << tag->getDescricao() << endl;
+        exit << tag->getNome() << ": " << tag->getDescricao() << endl;
         tag = tag->proximaTag;
     }
 }
