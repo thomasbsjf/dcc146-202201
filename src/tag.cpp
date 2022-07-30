@@ -102,7 +102,7 @@ void Tag::adicionarTag(string line)
     }
     else
     {
-        cout << "[ ERRO ] TAG inválida!" << endl;
+        cout << "[ ERRO ] TAG invalida!" << endl;
     }
 }
 

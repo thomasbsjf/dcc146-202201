@@ -15,7 +15,7 @@ using namespace std;
 /**
  * Função responsável por informar as opções disponíveis no programa
  * Informa como executar o comando desejado
-*/
+ */
 void mensagemInicial()
 {
     cout << "-------------------------------"
@@ -47,18 +47,17 @@ void mensagemInicial()
 /**
  * Função responsável por imprimir as mensagens do arquivo main para o usuário
  *
-*/
+ */
 void printMessage(string type, string message)
 {
     cout << "[" << type << "]" << message << endl;
 }
 
-
 /**
  * Função responsável por separar o texto digitado(split) após cada espaço digitado
  * Recebe uma string (digitada ou pegada pelo arquivo)
- * E recebe a posição que será avaliada 
-*/
+ * E recebe a posição que será avaliada
+ */
 string split(string s, int pos)
 {
     int i = 0;
@@ -75,11 +74,97 @@ string split(string s, int pos)
     return "";
 }
 
+void escolheOpcao(bool stop, Tag *tag)
+{
+    string input;
+    getline(cin, input);
+    string option = split(input, 0);
+    if (option.at(0) == ':')
+    {
+        if (option == ":d")
+        {
+            printMessage("WARNING", "Comando ainda nao implementado");
+        }
+        else
+        {
+            if (option == ":c")
+            {
+                ifstream entrada(split(input, 1));
+                while (!entrada.eof())
+                {
+                    string aux;
+                    getline(entrada, aux, '\n');
+                    cout << aux << endl;
+                    if (aux != "")
+                    {
+                        tag->adicionarTag(aux);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                entrada.close();
+                printMessage("INFO", "Arquivo carregado com as definicoes das tags");
+            }
+            else
+            {
+                if (option == ":o")
+                {
+                    printMessage("INFO", "Caminho de saida especificado com sucesso");
+                }
+                else
+                {
+                    if (option == ":p")
+                    {
+                        printMessage("WARNING", "Comando ainda nao implementado");
+                    }
+                    else
+                    {
+                        if (option == ":a")
+                        {
+                            printMessage("INFO", "Listagem das definicoes formais dos automatos.");
+                        }
+                        else
+                        {
+                            if (option == ":l")
+                            {
+                                tag->listarTagsValidas();
+                                printMessage("INFO", "Listagem das tags validas realizada");
+                            }
+                            else
+                            {
+                                if (option == ":q")
+                                {
+                                    printMessage("INFO", "Programa finalizado com sucesso");
+                                    stop = true;
+                                }
+                                else
+                                {
+                                    if (option == ":s")
+                                    {
+                                        tag->salvarTag(split(input, 1));
+                                        printMessage("INFO", "Tags armazenadas com sucesso");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        tag->adicionarTag(input);
+    }
+}
+
 /**
  * Função principal, responsável pela execução do programa
- * 
- * 
-*/
+ *
+ *
+ */
 int main()
 {
     mensagemInicial();
@@ -88,87 +173,6 @@ int main()
     Tag *tag = new Tag();
     while (!stop)
     {
-        string input;
-        getline(cin, input);
-        string option = split(input, 0);
-        if (option.at(0) == ':')
-        {
-            if (option == ":d")
-            {
-                printMessage("WARNING", "Comando ainda nao implementado");
-            }
-            else
-            {
-                if (option == ":c")
-                {
-                    ifstream entrada(split(input, 1));
-                    while (!entrada.eof())
-                    {
-                        string aux;
-                        getline(entrada, aux, '\n');
-                        cout << aux << endl;
-                        if (aux != "")
-                        {
-                            tag->adicionarTag(aux);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    entrada.close();
-                    printMessage("INFO", "Arquivo carregado com as definicoes das tags");
-                }
-                else
-                {
-                    if (option == ":o")
-                    {
-                        printMessage("INFO", "Caminho de saida especificado com sucesso");
-                    }
-                    else
-                    {
-                        if (option == ":p")
-                        {
-                            printMessage("WARNING", "Comando ainda nao implementado");
-                        }
-                        else
-                        {
-                            if (option == ":a")
-                            {
-                                printMessage("INFO", "Listagem das definicoes formais dos automatos.");
-                            }
-                            else
-                            {
-                                if (option == ":l")
-                                {
-                                    tag->listarTagsValidas();
-                                    printMessage("INFO", "Listagem das tags validas realizada");
-                                }
-                                else
-                                {
-                                    if (option == ":q")
-                                    {
-                                        printMessage("INFO", "Programa finalizado com sucesso");
-                                        stop = true;
-                                    }
-                                    else
-                                    {
-                                        if (option == ":s")
-                                        {
-                                            tag->salvarTag(split(input, 1));
-                                            printMessage("INFO", "Tags armazenadas com sucesso");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            tag->adicionarTag(input);
-        }
+        escolheOpcao(stop, tag);
     }
 }
