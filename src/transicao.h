@@ -25,9 +25,9 @@ public:
     Transicao(int origem, int destino, string simbolo);
     ~Transicao();
 
-    void setOrigem(int origem);
-    void setSimbolo(string simbolo);
-    void setDestino(int destino);
+    void setOrigem(int ori);
+    void setSimbolo(string simb);
+    void setDestino(int dest);
     int getOrigem();
     string getSimbolo();
     int getDestino();

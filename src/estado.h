@@ -19,6 +19,7 @@ class Estado
 {
 private:
     int inicial, final;
+
 public:
     Estado();
     Estado(int inicial, int final);
