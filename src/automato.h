@@ -19,7 +19,9 @@ using namespace std;
 class Automato
 {
 private:
-    //string ;
+    Transicao transicao;
+    Estado estado;
+    Alfabeto alfabeto;
 
 public:
     void montaAutomato(Tag *tag);
