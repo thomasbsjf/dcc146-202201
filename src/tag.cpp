@@ -14,6 +14,7 @@
 #include <stack>
 #include <regex>
 #include "tag.h"
+#include "automato.h"
 
 /**
  * Construtor para inicialização vazia da classe Tag
@@ -87,6 +88,7 @@ void Tag::adicionarTag(string line)
             Tag *tag = new Tag(nome, descricao);
             setPrimeiraTag(tag);
         }
+        //montaAutomato(descricao);
         else
         {
             Tag *tag = this->getPrimeiraTag();
@@ -249,4 +251,9 @@ void Tag::setPrimeiraTag(Tag *tag)
 Tag *Tag::getPrimeiraTag()
 {
     return this->primeiraTag;
+}
+
+Tag *Tag::getProximaTag()
+{
+    return this->proximaTag;
 }

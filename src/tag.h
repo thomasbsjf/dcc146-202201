@@ -18,13 +18,15 @@ using namespace std;
 class Tag
 {
 private:
-    string nome, descricao;
-    Tag *primeiraTag, *proximaTag;
+
 
 public:
     Tag();
     Tag(string nome, string descricao);
     ~Tag();
+
+    string nome, descricao;
+    Tag *primeiraTag, *proximaTag;
 
     void adicionarTag(string line);
     void listarTagsValidas();
@@ -36,6 +38,7 @@ public:
     string getNome();
     string getDescricao();
     Tag *getPrimeiraTag();
+    Tag *getProximaTag();
 };
 
 #endif // TAG_H_INCLUDED
