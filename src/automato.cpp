@@ -37,6 +37,29 @@ Automato::~Automato()
   um struct estado (que contem 1 vector de estados iniciais e 1 vector de estados finais) e
   um vector de simbolos do alfabeto
 */
+
+int ultimoEstado(Automato aut)
+{
+    Automato automato;
+    int totalEstados;
+    vector<Transicao> ori, dest;
+    ori = automato.transicoes;
+    dest = automato.transicoes;
+
+    sort(ori.begin(), ori.end(), [](const Transicao &a, const Transicao &b)
+         { return (a.origem < b.origem); });
+    sort(dest.begin(), dest.end(), [](const Transicao &a, const Transicao &b)
+         { return (a.destino < b.destino); });
+    if (ori.back().origem > dest.back().destino)
+    {
+        totalEstados = ori.back().origem;
+        return totalEstados;
+    }
+    totalEstados = dest.back().destino;
+    return totalEstados;
+    // sort( s.begin(), s.end(), [](const staff &a, const staff &b){ return (a.id < b.id);});
+}
+
 Automato automatoSimples(string simb, int i)
 {
     int ini = i + 1;
@@ -177,4 +200,56 @@ Automato criaFecho(Automato aut)
     automato.alfabeto = alfabeto;
 
     return automato;
+}
+
+void montaAutomato(Tag *tag)
+{
+    int totalEstados = 0;
+    stack<Automato> pilha;
+
+    // Tag *novaTag = tag;
+
+    for (int i = 0; i < tag->descricao.length(); i++){
+        if(tag->descricao[i] == '+'){
+            Automato aut1 = pilha.top();
+            pilha.pop();
+            Automato aut2 = pilha.top();
+            pilha.pop();
+            totalEstados = ultimoEstado(aut1);
+            Automato automato = automatoUniao(aut1, aut2, totalEstados);          
+            
+            pilha.push(automato);
+        }
+        else if (tag->descricao[i] == '*')
+        {
+            Automato aut1 = pilha.top();
+            pilha.pop();
+            Automato automato = criaFecho(aut1);
+            pilha.push(automato);
+        }
+        else if (tag->descricao[i] == '.')
+        {
+            Automato aut1 = pilha.top();
+            pilha.pop();
+            Automato aut2 = pilha.top();
+            pilha.pop();
+            Automato automato;
+            //automato = automatoConcatenacao(aut1, aut2);
+            pilha.push(automato);
+        }
+        else
+        {
+            string simbolo(1,tag->descricao[i]);
+            Automato automato = automatoSimples(simbolo, totalEstados);
+            totalEstados = totalEstados + 2;
+            pilha.push(automato);
+        }
+    }
+    // Automato AF = pilha.pop()
+    // AFlambda.push(AF);
+    // fechoLambda(AF);
+}
+
+void fechoLambda(Automato aut)
+{
 }

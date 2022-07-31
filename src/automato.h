@@ -30,13 +30,13 @@ public:
     Automato();
     ~Automato();
 
-    void montaAutomato();
+    void montaAutomato(Tag *tag);
     void estadoFinal(Automato aut);
     Automato automatoSimples(string simbolo, int i);
     Automato automatoUniao(Automato aut1, Automato au2, int i);
     Automato automatoConcatenacao(Automato aut1, Automato aut2);
     Automato criaFecho(Automato aut);
-
+    void fechoLambda(Automato aut);
 };
 
 #endif // AUTOMATO_H_INCLUDED
