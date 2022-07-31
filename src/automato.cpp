@@ -24,7 +24,6 @@
  */
 Automato::Automato()
 {
-
 }
 
 /**
@@ -32,37 +31,7 @@ Automato::Automato()
  */
 Automato::~Automato()
 {
-
 }
-
-
-/*
-//Estrutura de transicao do Automato
-struct Transicao
-{
-    int origem;
-    int destino;
-    string simbolo;
-};
-//Struct com vectors de estados iniciais e finais
-struct Estado
-{
-    vector<int> inicial;
-    vector<int> final;
-};
-//Struct que contem um vector com os simbolos do alfabeto do automato
-struct Alfabeto
-{
-    vector<string> simbolos;
-};
-
-//Automato que contem um vector de transicoes, estados iniciais e finais
-struct Automa
-{
-    vector<Transicao> transicoes;
-    struct Estado estados;
-    struct Alfabeto alfabeto;
-};
 
 /*Funcao cria um automato simples que ira conter um vector de transicoes,
   um struct estado (que contem 1 vector de estados iniciais e 1 vector de estados finais) e
@@ -78,11 +47,6 @@ Automato automatoSimples(string simb, int i)
     Estado estados;
     Alfabeto alfabeto;
     Automato automato;
-    //struct Transicao transicao;
-    //vector<Transicao> transicoes;
-    //struct Estado estados;
-    //struct Alfabeto alfabeto;
-
 
     transicao.origem = ini;
     transicao.destino = fin;
@@ -107,11 +71,73 @@ Automato automatoUniao(Automato aut1, Automato aut2, int i)
     int fin = i + 2;
     Automato automato;
     vector<Transicao> transicoes;
-    vector<Alfabeto> alfabeto;
-    
-   // for_each(aut1.transicoes.begin(), aut1.transicoes.end(),transicoes);{
-    //    transicoes.a;
-   // }
-    //aut1.transicoes.transicoes
+    Alfabeto alfabeto;
+
+    for (auto t = aut1.transicoes.begin(); t != aut1.transicoes.end(); ++t)
+    {
+        transicoes.push_back(*t);
+    }
+
+    for (auto t = aut2.transicoes.begin(); t != aut2.transicoes.end(); ++t)
+    {
+        transicoes.push_back(*t);
+    }
+    for (auto a = aut1.alfabeto.simbolos.begin(); a != aut1.alfabeto.simbolos.end(); ++a)
+    {
+        alfabeto.simbolos.push_back(*a);
+    }
+    for (auto a = aut2.alfabeto.simbolos.begin(); a != aut2.alfabeto.simbolos.end(); ++a)
+    {
+        alfabeto.simbolos.push_back(*a);
+    }
+
+    for (auto f = aut1.estados.final.begin(); f != aut1.estados.final.end(); ++f)
+    {
+        Transicao transicao;
+        transicao.origem = *f;
+        transicao.destino = fin;
+        transicao.simbolo = "lambda";
+        transicoes.push_back(transicao);
+    }
+
+    for (auto f = aut2.estados.final.begin(); f != aut2.estados.final.end(); ++f)
+    {
+        Transicao transicao;
+        transicao.origem = *f;
+        transicao.destino = fin;
+        transicao.simbolo = "lambda";
+        transicoes.push_back(transicao);
+    }
+
+    for (auto i = aut1.estados.inicial.begin(); i != aut1.estados.inicial.end(); ++i)
+    {
+        Transicao transicao;
+        transicao.origem = ini;
+        transicao.destino = *i;
+        transicao.simbolo = "lambda";
+        transicoes.push_back(transicao);
+    }
+
+    for (auto i = aut2.estados.inicial.begin(); i != aut2.estados.inicial.end(); ++i)
+    {
+        Transicao transicao;
+        transicao.origem = ini;
+        transicao.destino = *i;
+        transicao.simbolo = "lambda";
+        transicoes.push_back(transicao);
+    }
+
+    alfabeto.simbolos.push_back("lambda");
+
+    Estado estados;
+    estados.inicial.push_back(ini);
+    estados.final.push_back(fin);
+    automato.transicoes = transicoes;
+    automato.estados = estados;
+
+    vector<string>::iterator it;
+    it = std::unique(alfabeto.simbolos.begin(), alfabeto.simbolos.end()); //Cria um vector somente com valores unicos presentes no alfabeto
+    alfabeto.simbolos.resize(std::distance(alfabeto.simbolos.begin(), it)); //Da Resize no vector de simbolos de alfabetos somente com valores unicos
+
     return automato;
 }
