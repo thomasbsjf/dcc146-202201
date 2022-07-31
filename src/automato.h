@@ -24,13 +24,16 @@ private:
     Alfabeto alfabeto;
 
 public:
+    Automato();
+    Automato(Transicao transi, Estado est, Alfabeto alf);
+    ~Automato();
+
     void montaAutomato(Tag *tag);
     void estadoFinal(Automato aut);
-    Automato automatoSimples(String simbolo, int i);
+    Automato automatoSimples(string simbolo, int i);
     Automato automatoUniao(Automato aut1, Automato au2, int i);
-    Automato automatoConcatenacao(Automato aut1, aut2);
+    Automato automatoConcatenacao(Automato aut1, Automato aut2);
     Automato criaFecho(Automato aut);
-
 };
 
 #endif // AUTOMATO_H_INCLUDED

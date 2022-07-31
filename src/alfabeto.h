@@ -20,13 +20,15 @@ class Alfabeto
 {
 private:
     vector<string> alfabeto;
+
 public:
     Alfabeto();
+    Alfabeto(string string);
     ~Alfabeto();
 
-    void addSimbolo(string simbolo)
-    //vec getDestino();
-
+    void elementoAlfabeto(string string);
+    void addSimbolo(string simbolo);
+    // vec getDestino();
 };
 
 #endif // ALFABETO_H_INCLUDED

@@ -21,37 +21,37 @@
 
 /**
  * Construtor para inicialização vazia da classe Automato
- * 
  *
-*/
+ *
+ */
 Automato::Automato()
 {
-    
-    //this-> = nullptr;
+
+    // this-> = nullptr;
 }
 Automato::Automato(Transicao transi, Estado est, Alfabeto alf)
 {
     this->transicao = transi;
     this->estado = est;
     this->alfabeto = alf;
-    //this-> = nullptr;
+    // this-> = nullptr;
 }
 
 /**
  * Destrutor da class Automato
- * 
-*/
+ *
+ */
 Automato::~Automato()
 {
-
 }
 
-Automato automatoSimples(String simbolo, int i){
+Automato automatoSimples(string simbolo, int i)
+{
     int ini = i + 1;
     int fin = i + 2;
-    Transicao transicao = new Transicao(ini, fin, simbolo);
-    Estado estado = new Estado(ini,fin);
-    Alfabeto alfabeto = new Alfabeto(simbolo);
-    Automato automato = new Automato(transicao,estado,alfabeto);
-    return automato;
+    Transicao *transicao = new Transicao(ini, fin, simbolo);
+    Estado *estado = new Estado(ini, fin);
+    Alfabeto *alfabeto = new Alfabeto(simbolo);
+    Automato *automato = new Automato(*transicao, *estado, *alfabeto);
+    return *automato;
 }
