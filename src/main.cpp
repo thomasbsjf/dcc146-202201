@@ -8,7 +8,11 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "automato.h"
 #include "tag.h"
+#include "estado.h"
+#include "transicao.h"
+#include "alfabeto.h"
 
 using namespace std;
 

@@ -17,18 +17,11 @@
 using namespace std;
 
 class Alfabeto
-{
-private:
-    vector<string> alfabeto;
-
+{   
 public:
+    vector<string> simbolos;
     Alfabeto();
-    Alfabeto(string string);
     ~Alfabeto();
-
-    void elementoAlfabeto(string string);
-    void addSimbolo(string simbolo);
-    // vec getDestino();
 };
 
 #endif // ALFABETO_H_INCLUDED

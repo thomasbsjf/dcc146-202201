@@ -17,21 +17,11 @@ using namespace std;
 
 class Transicao
 {
-private:
+public:
     int origem, destino;
     string simbolo;
-public:
     Transicao();
-    Transicao(int origem, int destino, string simbolo);
     ~Transicao();
-
-    void setOrigem(int ori);
-    void setSimbolo(string simb);
-    void setDestino(int dest);
-    int getOrigem();
-    string getSimbolo();
-    int getDestino();
-
 };
 
 #endif // TRANSICAO_H_INCLUDED

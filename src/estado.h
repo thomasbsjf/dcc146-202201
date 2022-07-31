@@ -12,24 +12,17 @@
 #include <stdio.h>
 #include <string>
 #include "estado.h"
+#include <vector>
 
 using namespace std;
 
 class Estado
 {
-private:
-    int inicial, final;
-
 public:
+    vector<int> inicial;
+    vector<int> final;
     Estado();
-    Estado(int inicial, int final);
     ~Estado();
-
-    void setInicial(int inicial);
-    void setFinal(int final);
-    int getInicial();
-    int getFinal();
-
 };
 
 #endif // ESTADO_H_INCLUDED
