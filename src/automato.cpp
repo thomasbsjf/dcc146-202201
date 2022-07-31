@@ -136,8 +136,45 @@ Automato automatoUniao(Automato aut1, Automato aut2, int i)
     automato.estados = estados;
 
     vector<string>::iterator it;
-    it = std::unique(alfabeto.simbolos.begin(), alfabeto.simbolos.end()); //Cria um vector somente com valores unicos presentes no alfabeto
-    alfabeto.simbolos.resize(std::distance(alfabeto.simbolos.begin(), it)); //Da Resize no vector de simbolos de alfabetos somente com valores unicos
+    it = std::unique(alfabeto.simbolos.begin(), alfabeto.simbolos.end());   // Cria um vector somente com valores unicos presentes no alfabeto
+    alfabeto.simbolos.resize(std::distance(alfabeto.simbolos.begin(), it)); // Da Resize no vector de simbolos de alfabetos somente com valores unicos
+
+    return automato;
+}
+
+Automato criaFecho(Automato aut)
+{
+    Estado estados;
+    Automato automato;
+    vector<Transicao> transicoes = aut.transicoes;
+    Alfabeto alfabeto = aut.alfabeto;
+
+    for (auto i : aut.estados.inicial)
+    {
+        estados.inicial.push_back(i);
+    }
+
+    for (auto f : aut.estados.final)
+    {
+        for (auto i : aut.estados.inicial)
+        {
+            Transicao transicao;
+            transicao.origem = f;
+            transicao.destino = i;
+            transicao.simbolo = "lambda";
+            transicoes.push_back(transicao);
+        }
+    }
+    alfabeto.simbolos.push_back("lambda");
+
+    vector<string>::iterator it;
+    it = std::unique(alfabeto.simbolos.begin(), alfabeto.simbolos.end());   // Cria um vector somente com valores unicos presentes no alfabeto
+    alfabeto.simbolos.resize(std::distance(alfabeto.simbolos.begin(), it)); // Da Resize no vector de simbolos de alfabetos somente com valores unicos
+
+    automato.estados.inicial = estados.inicial;
+    automato.estados.final = estados.inicial;
+    automato.transicoes = transicoes;
+    automato.alfabeto = alfabeto;
 
     return automato;
 }
