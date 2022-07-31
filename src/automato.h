@@ -13,27 +13,30 @@
 #include <string>
 #include "automato.h"
 #include "tag.h"
+#include "estado.h"
+#include "transicao.h"
+#include "alfabeto.h"
 
 using namespace std;
 
 class Automato
 {
-private:
-    Transicao transicao;
-    Estado estado;
-    Alfabeto alfabeto;
 
 public:
+   vector<Transicao> transicoes;
+   Estado estados;
+   Alfabeto alfabeto;
+
     Automato();
-    Automato(Transicao transi, Estado est, Alfabeto alf);
     ~Automato();
 
-    void montaAutomato(Tag *tag);
+    void montaAutomato();
     void estadoFinal(Automato aut);
     Automato automatoSimples(string simbolo, int i);
     Automato automatoUniao(Automato aut1, Automato au2, int i);
     Automato automatoConcatenacao(Automato aut1, Automato aut2);
     Automato criaFecho(Automato aut);
+
 };
 
 #endif // AUTOMATO_H_INCLUDED

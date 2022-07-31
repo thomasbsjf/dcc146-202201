@@ -21,37 +21,97 @@
 
 /**
  * Construtor para inicialização vazia da classe Automato
- *
- *
  */
 Automato::Automato()
 {
 
-    // this-> = nullptr;
-}
-Automato::Automato(Transicao transi, Estado est, Alfabeto alf)
-{
-    this->transicao = transi;
-    this->estado = est;
-    this->alfabeto = alf;
-    // this-> = nullptr;
 }
 
 /**
  * Destrutor da class Automato
- *
  */
 Automato::~Automato()
 {
+
 }
 
-Automato automatoSimples(string simbolo, int i)
+
+/*
+//Estrutura de transicao do Automato
+struct Transicao
+{
+    int origem;
+    int destino;
+    string simbolo;
+};
+//Struct com vectors de estados iniciais e finais
+struct Estado
+{
+    vector<int> inicial;
+    vector<int> final;
+};
+//Struct que contem um vector com os simbolos do alfabeto do automato
+struct Alfabeto
+{
+    vector<string> simbolos;
+};
+
+//Automato que contem um vector de transicoes, estados iniciais e finais
+struct Automa
+{
+    vector<Transicao> transicoes;
+    struct Estado estados;
+    struct Alfabeto alfabeto;
+};
+
+/*Funcao cria um automato simples que ira conter um vector de transicoes,
+  um struct estado (que contem 1 vector de estados iniciais e 1 vector de estados finais) e
+  um vector de simbolos do alfabeto
+*/
+Automato automatoSimples(string simb, int i)
 {
     int ini = i + 1;
     int fin = i + 2;
-    Transicao *transicao = new Transicao(ini, fin, simbolo);
-    Estado *estado = new Estado(ini, fin);
-    Alfabeto *alfabeto = new Alfabeto(simbolo);
-    Automato *automato = new Automato(*transicao, *estado, *alfabeto);
-    return *automato;
+
+    Transicao transicao;
+    vector<Transicao> transicoes;
+    Estado estados;
+    Alfabeto alfabeto;
+    Automato automato;
+    //struct Transicao transicao;
+    //vector<Transicao> transicoes;
+    //struct Estado estados;
+    //struct Alfabeto alfabeto;
+
+
+    transicao.origem = ini;
+    transicao.destino = fin;
+    transicao.simbolo = simb;
+    transicoes.push_back(transicao);
+
+    estados.inicial.push_back(ini);
+    estados.final.push_back(fin);
+
+    alfabeto.simbolos.push_back(simb);
+
+    automato.transicoes = transicoes;
+    automato.estados = estados;
+    automato.alfabeto = alfabeto;
+
+    return automato;
+}
+
+Automato automatoUniao(Automato aut1, Automato aut2, int i)
+{
+    int ini = i + 1;
+    int fin = i + 2;
+    Automato automato;
+    vector<Transicao> transicoes;
+    vector<Alfabeto> alfabeto;
+    
+   // for_each(aut1.transicoes.begin(), aut1.transicoes.end(),transicoes);{
+    //    transicoes.a;
+   // }
+    //aut1.transicoes.transicoes
+    return automato;
 }
