@@ -308,7 +308,7 @@ void montaAutomato(Tag *tag)
 }
 
 // testar com calma
-/*
+
 void fechoLambda(Automato aut)
 {
     Fecho fecho;
@@ -340,31 +340,51 @@ void fechoLambda(Automato aut)
         vector<Transicao> transicoes1;
         vector<Transicao> aux2;
         vector<State> transicoesFecho;
-        remove_if(aux.begin(), aux.end(), [&](const Transicao &t)
+        remove_if(aux.begin(), aux.end(), [&](Transicao &t)
                   { return (t.origem != s.origem); }); // remove todas as transicoes em que a origem da transicao nao e igual a do estado atual ??
         transicoes1 = aux;
 
         if (transicoes1.size() > 0)
         {
-            //   transicoesFecho = s; //ARRUMAR
+            transicoesFecho.push_back(s);
 
             for (auto t : transicoes1)
             {
-                // transicoesFecho.push_back(t.destino); //ARRUMAR
-                // aux2.push_back(t.destino); // ARRUMAR
+                transicoesFecho.push_back(t.origem); // ARRUMAR
+                aux2.push_back(t.destino);           // ARRUMAR
             }
-        }
-        bool stop = true;
-        while (stop)
-        {
-            for (auto a : aux2)
+            bool stop = true;
+            while (stop)
             {
-                remove_if(aux.begin(), aux.end(), [&](const Transicao &t)
-                          { return (t.origem != a.origem); }); // ajustar comment
-                vector<Transicao> transicoes2 = aux;
+                for (auto a : aux2)
+                {
+                    remove_if(aux.begin(), aux.end(), [&](const Transicao &t)
+                              { return (t.origem != a.origem); }); // ajustar comment
+                    vector<Transicao> transicoes2 = aux;
+                    for (auto v : transicoes2)
+                    {
+                        if (transicoesFecho.at(v.destino) == -1)
+                        {
+                            transicoesFecho.push_back(v.origem); // ARRUMAR
+                            aux2.push_back(v.destino);           // ARRUMAR
+                        }
+                    }
+                    aux2.erase(aux2.begin());
+                }
+                if (aux2.size() == 0)
+                {
+                    stop = false;
+                }
             }
+            fecho.estado.inicial.push_back(s);
+            fecho.transicoes.push_back(transicoesFecho);
+        }
+        else
+        {
+            fecho.estado.inicial.push_back(s.origem);
+            fecho.estado.final.push_back(s.destino);
+            fecho.transicoes.push_back(s.origem);
+            fecho.transicoes.push_back(s.destino);
         }
     }
 }
-*/
-
