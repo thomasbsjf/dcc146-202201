@@ -290,8 +290,7 @@ void montaAutomato(Tag *tag)
             pilha.pop();
             Automato aut2 = pilha.top();
             pilha.pop();
-            Automato automato;
-            // automato = automatoConcatenacao(aut1, aut2);
+            Automato automato = automatoConcatenacao(aut1, aut2);
             pilha.push(automato);
         }
         else
@@ -308,7 +307,7 @@ void montaAutomato(Tag *tag)
 }
 
 // testar com calma
-
+/*
 void fechoLambda(Automato aut)
 {
     Fecho fecho;
@@ -386,5 +385,22 @@ void fechoLambda(Automato aut)
             fecho.transicoes.push_back(s.origem);
             fecho.transicoes.push_back(s.destino);
         }
+    }
+}
+*/
+// Falta completar a funcao assim que terminar
+void listaAutomatos()
+{
+    Tag *tag = tag->getPrimeiraTag();
+    while (tag != nullptr)
+    {
+        cout << tag->getNome() << ": " << tag->getDescricao() << endl;
+        cout << "Informacoes do Automato";
+        cout << "Estados Iniciais: "; // ajustar
+        cout << "Estados Finais: ";   // ajustar
+        cout << "Alfabeto: ";         // ajustar
+        cout << "Transicoes: ";       // ajustar
+
+        tag = tag->proximaTag;
     }
 }
