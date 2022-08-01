@@ -14,6 +14,7 @@
 #include <stack>
 #include <regex>
 #include "alfabeto.h"
+#include "transicao.h"
 
 /**
  * Construtor para inicialização vazia da classe Alfabeto
@@ -30,5 +31,16 @@ Alfabeto::Alfabeto()
  */
 Alfabeto::~Alfabeto()
 {
+}
 
+Alfabeto geraAlfabetoTransicoes(vector<Transicao> transicoes)
+{
+    Alfabeto alfabeto;
+    
+    for (auto t : transicoes)
+    {        
+        alfabeto.simbolos.push_back(t.simbolo);
+    }
+
+    return alfabeto;
 }

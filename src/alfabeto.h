@@ -13,6 +13,7 @@
 #include <string>
 #include "estado.h"
 #include <vector>
+#include "transicao.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
     vector<string> simbolos;
     Alfabeto();
     ~Alfabeto();
+    vector<Alfabeto> geraAlfabetoTransicoes(vector<Transicao> transicoes);
 };
 
 #endif // ALFABETO_H_INCLUDED
