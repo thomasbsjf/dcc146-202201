@@ -172,6 +172,54 @@ Automato automatoUniao(Automato aut1, Automato aut2, int i)
     return automato;
 }
 
+Automato automatoConcatenacao(Automato aut1, Automato aut2)
+{
+    Automato automato;
+    vector<Transicao> transicoes;
+    Alfabeto alfabeto;
+    Estado estados;
+
+    for (auto v : aut1.transicoes)
+    {
+        transicoes.push_back(v);
+    }
+    for (auto v : aut2.transicoes)
+    {
+        transicoes.push_back(v);
+    }
+    for (auto v : aut1.alfabeto.simbolos)
+    {
+        alfabeto.simbolos.push_back(v);
+    }
+    for (auto v : aut2.alfabeto.simbolos)
+    {
+        alfabeto.simbolos.push_back(v);
+    }
+    for (auto v : aut1.estados.inicial)
+    {
+        for (auto x : aut2.estados.final)
+        {
+            Transicao transicao;
+            transicao.origem = x;
+            transicao.destino = v;
+            transicao.simbolo = "lambda";
+        }
+    }
+    automato.alfabeto = alfabeto;
+    automato.transicoes = transicoes;
+    for (auto v : aut2.estados.inicial)
+    {
+        estados.inicial.push_back(v);
+    }
+    for (auto v : aut1.estados.final)
+    {
+        estados.final.push_back(v);
+    }
+    automato.estados = estados;
+
+    return automato;
+}
+
 Automato criaFecho(Automato aut)
 {
     Estado estados;
@@ -260,6 +308,7 @@ void montaAutomato(Tag *tag)
 }
 
 // testar com calma
+/*
 void fechoLambda(Automato aut)
 {
     Fecho fecho;
@@ -297,12 +346,12 @@ void fechoLambda(Automato aut)
 
         if (transicoes1.size() > 0)
         {
-         //   transicoesFecho = s; //ARRUMAR
+            //   transicoesFecho = s; //ARRUMAR
 
             for (auto t : transicoes1)
             {
-               // transicoesFecho.push_back(t.destino); //ARRUMAR
-               // aux2.push_back(t.destino); // ARRUMAR
+                // transicoesFecho.push_back(t.destino); //ARRUMAR
+                // aux2.push_back(t.destino); // ARRUMAR
             }
         }
         bool stop = true;
@@ -317,48 +366,5 @@ void fechoLambda(Automato aut)
         }
     }
 }
-Automato automatoConcatenacao(Automato aut1, Automato aut2)
-{
-    Automato automato;
-    vector<Transicao> transicoes;
-    Alfabeto alfabeto;
-    Estado estados;
+*/
 
-    for (auto v : aut1.transicoes)
-    {
-        transicoes.push_back(v);
-    }
-    for (auto v : aut2.transicoes)
-    {
-        transicoes.push_back(v);
-    }
-    for (auto v : aut1.alfabeto.simbolos)
-    {
-        alfabeto.simbolos.push_back(v);
-    }
-    for (auto v : aut2.alfabeto.simbolos)
-    {
-        alfabeto.simbolos.push_back(v);
-    }
-    for (auto v : aut1.estados.inicial)
-    {
-        for (auto x : aut2.estados.final)
-        {
-            Transicao transicao;
-            transicao.origem = x;
-            transicao.destino = v;
-            transicao.simbolo = "lambda";
-        }
-    }
-    automato.alfabeto = alfabeto;
-    automato.transicoes = transicoes;
-    for (auto v : aut2.estados.inicial)
-    {
-        estados.inicial.push_back(v);
-    }
-    for (auto v : aut1.estados.final)
-    {
-        estados.final.push_back(v);
-    }
-    automato.estados = estados;
-}
