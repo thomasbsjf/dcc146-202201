@@ -36,11 +36,14 @@ Alfabeto::~Alfabeto()
 Alfabeto geraAlfabetoTransicoes(vector<Transicao> transicoes)
 {
     Alfabeto alfabeto;
-    
+
     for (auto t : transicoes)
-    {        
+    {
         alfabeto.simbolos.push_back(t.simbolo);
     }
 
+    vector<string>::iterator it;
+    it = std::unique(alfabeto.simbolos.begin(), alfabeto.simbolos.end());   // Cria um vector somente com valores unicos presentes no alfabeto
+    alfabeto.simbolos.resize(std::distance(alfabeto.simbolos.begin(), it)); // Da Resize no vector de simbolos de states somente com valores unicos
     return alfabeto;
 }
