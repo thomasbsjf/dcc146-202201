@@ -258,6 +258,7 @@ void montaAutomato(Tag *tag)
     // AFlambda.push(AF);
     // fechoLambda(AF);
 }
+<<<<<<< HEAD
 
 // testar com calma
 void fechoLambda(Automato aut)
@@ -317,3 +318,50 @@ void fechoLambda(Automato aut)
         }
     }
 }
+=======
+Automato automatoConcatenacao(Automato aut1, Automato aut2)
+{
+    Automato automato;
+    vector<Transicao> transicoes;
+    Alfabeto alfabeto;
+    Estado estados;
+
+    for (auto v : aut1.transicoes)
+    {
+        transicoes.push_back(v);
+    }
+    for (auto v : aut2.transicoes)
+    {
+        transicoes.push_back(v);
+    }
+    for (auto v : aut1.alfabeto.simbolos)
+    {
+        alfabeto.simbolos.push_back(v);
+    }
+    for (auto v : aut2.alfabeto.simbolos)
+    {
+        alfabeto.simbolos.push_back(v);
+    }
+    for (auto v : aut1.estados.inicial)
+    {
+        for (auto x : aut2.estados.final)
+        {
+            Transicao transicao;
+            transicao.origem = x;
+            transicao.destino = v;
+            transicao.simbolo = "lambda";
+        }
+    }
+    automato.alfabeto = alfabeto;
+    automato.transicoes = transicoes;
+    for (auto v : aut2.estados.inicial)
+    {
+        estados.inicial.push_back(v);
+    }
+    for (auto v : aut1.estados.final)
+    {
+        estados.final.push_back(v);
+    }
+    automato.estados = estados;
+}
+>>>>>>> d955992deabb598906c06d7be58a5b6e1346fbd5
