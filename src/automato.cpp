@@ -258,7 +258,6 @@ void montaAutomato(Tag *tag)
     // AFlambda.push(AF);
     // fechoLambda(AF);
 }
-<<<<<<< HEAD
 
 // testar com calma
 void fechoLambda(Automato aut)
@@ -318,7 +317,6 @@ void fechoLambda(Automato aut)
         }
     }
 }
-=======
 Automato automatoConcatenacao(Automato aut1, Automato aut2)
 {
     Automato automato;
@@ -364,4 +362,3 @@ Automato automatoConcatenacao(Automato aut1, Automato aut2)
     }
     automato.estados = estados;
 }
->>>>>>> d955992deabb598906c06d7be58a5b6e1346fbd5
