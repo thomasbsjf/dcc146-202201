@@ -18,6 +18,7 @@
 #include "transicao.h"
 #include "alfabeto.h"
 #include "estado.h"
+#include "fecho.h"
 
 /**
  * Construtor para inicialização vazia da classe Automato
@@ -209,15 +210,17 @@ void montaAutomato(Tag *tag)
 
     // Tag *novaTag = tag;
 
-    for (int i = 0; i < tag->descricao.length(); i++){
-        if(tag->descricao[i] == '+'){
+    for (int i = 0; i < tag->descricao.length(); i++)
+    {
+        if (tag->descricao[i] == '+')
+        {
             Automato aut1 = pilha.top();
             pilha.pop();
             Automato aut2 = pilha.top();
             pilha.pop();
             totalEstados = ultimoEstado(aut1);
-            Automato automato = automatoUniao(aut1, aut2, totalEstados);          
-            
+            Automato automato = automatoUniao(aut1, aut2, totalEstados);
+
             pilha.push(automato);
         }
         else if (tag->descricao[i] == '*')
@@ -234,12 +237,12 @@ void montaAutomato(Tag *tag)
             Automato aut2 = pilha.top();
             pilha.pop();
             Automato automato;
-            //automato = automatoConcatenacao(aut1, aut2);
+            // automato = automatoConcatenacao(aut1, aut2);
             pilha.push(automato);
         }
         else
         {
-            string simbolo(1,tag->descricao[i]);
+            string simbolo(1, tag->descricao[i]);
             Automato automato = automatoSimples(simbolo, totalEstados);
             totalEstados = totalEstados + 2;
             pilha.push(automato);
@@ -249,7 +252,48 @@ void montaAutomato(Tag *tag)
     // AFlambda.push(AF);
     // fechoLambda(AF);
 }
-
-void fechoLambda(Automato aut)
+Automato automatoConcatenacao(Automato aut1, Automato aut2)
 {
+    Automato automato;
+    vector<Transicao> transicoes;
+    Alfabeto alfabeto;
+    Estado estados;
+
+    for (auto v : aut1.transicoes)
+    {
+        transicoes.push_back(v);
+    }
+    for (auto v : aut2.transicoes)
+    {
+        transicoes.push_back(v);
+    }
+    for (auto v : aut1.alfabeto.simbolos)
+    {
+        alfabeto.simbolos.push_back(v);
+    }
+    for (auto v : aut2.alfabeto.simbolos)
+    {
+        alfabeto.simbolos.push_back(v);
+    }
+    for (auto v : aut1.estados.inicial)
+    {
+        for (auto x : aut2.estados.final)
+        {
+            Transicao transicao;
+            transicao.origem = x;
+            transicao.destino = v;
+            transicao.simbolo = "lambda";
+        }
+    }
+    automato.alfabeto = alfabeto;
+    automato.transicoes = transicoes;
+    for (auto v : aut2.estados.inicial)
+    {
+        estados.inicial.push_back(v);
+    }
+    for (auto v : aut1.estados.final)
+    {
+        estados.final.push_back(v);
+    }
+    automato.estados = estados;
 }
