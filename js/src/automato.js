@@ -1,3 +1,5 @@
+const afn = [];
+
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
  * Itera pela tag e de acordo com o simbolo adiciona um novo estado ou executa operacao
@@ -25,7 +27,7 @@ function montaAutomato(tag) {
     } else if (tag[i] === ".") {
       const aut1 = pilha.pop();
       const aut2 = pilha.pop();
-      const automato = automatoConcatenacao(automato1, aut2);
+      const automato = automatoConcatenacao(aut1, aut2);
       pilha.push(automato);
     } else {
       const automato = automatoSimples(tag[i], totalEstados);
@@ -201,4 +203,91 @@ function automatoConcatenacao(aut1, aut2) {
   };
 
   return automato;
+}
+
+function criarAlfabeto(transicao) {
+  const alfabeto = [];
+  transicao.forEach((t) => {
+    alfabeto.push(t.simbolo);
+  });
+
+  return Array.from(new Set(alfabeto));
+}
+
+function afnLambdaParaAfn(aut, fecho) {
+  var aux1, aux2;
+  const transicoes = [];
+  aux1 = aut.estados.inicio.map((i) => i);
+  aux1 = aux1
+    .map((f) => {
+      var _fecho = fecho.filter((v) => v.estado === f);
+      return _fecho.map((r) => r.trnaicoes).flat();
+    })
+    .flat();
+  aux2 = aut.estados.final.map((i) => i);
+  aux2 = aux2
+    .map((f) => {
+      var _fecho = fecho.filter((v) => v.estado === f);
+      return _fecho.map((r) => r.trnaicoes).flat();
+    })
+    .flat();
+  const inicio = Array.from(new Set(aux1));
+  const fim = Array.from(new Set(aux2));
+
+  const semLambda = aut.transicoes.filter((t) => t.simbolo !== "lambda");
+  const comLambda = aut.transicoes.filter((t) => t.simbolo === "lambda");
+
+  fecho.map((f) => {
+    const transicaoAfn = semLambda.filter((t) => t.origem === f.estado);
+    if (transicaoAfn.length > 0) {
+      transicaoAfn.map((t) => transicoes.push(t));
+      var next = true;
+      const aux = [];
+      transicaoAfn.forEach((t) => {
+        aux.push({
+          ...t,
+          ref: t,
+        });
+      });
+      while (next === true) {
+        if (aux.length === 0) next = false;
+        aux.forEach((t) => {
+          const proxTransicao = comLambda.filter((l) => l.origem === t.destino);
+          if (proxTransicao.length > 0) {
+            const validaTransicao = proxTransicao.filter((a) => {
+              return transicoes.filter((t) => {
+                return (
+                  t.origem !== a.origem &&
+                  t.destino !== a.destino &&
+                  t.simbolo !== a.simbolo
+                );
+              });
+            });
+            validaTransicao.forEach((v) => {
+              transicoes.push({
+                origem: t.ref.origem,
+                destino: v.destino,
+                simbolo: t.simbolo,
+              });
+              aux.push({
+                ...v,
+                ref: t.ref,
+              });
+            });
+          }
+          aux.splice(0, 1);
+        });
+      }
+    }
+  });
+  const alfabeto = criarAlfabeto(transicoes.flat(2));
+  const afnProps = {
+    estados: {
+      inicio,
+      fim,
+    },
+    transicoes,
+    alfabeto,
+  };
+  afn.push(afnProps);
 }
