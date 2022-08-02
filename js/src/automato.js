@@ -1,3 +1,5 @@
+
+const AFlambda = [];
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
  * Itera pela tag e de acordo com o simbolo adiciona um novo estado ou executa operacao
@@ -33,6 +35,9 @@ function montaAutomato(tag) {
       pilha.push(automato);
     }
   }
+  const aut = pilha.pop();
+  AFlambda.push(aut);
+  fechoLambda(aut);
 }
 
 /*
