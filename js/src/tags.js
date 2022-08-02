@@ -3,8 +3,6 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
-const inquirer = require("inquirer");
-const lineReader = require("line-reader");
 const fs = require("fs");
 const tags = [];
 
@@ -214,6 +212,11 @@ function validarSeConsome(automato, criterio) {
   return indice;
 }
 
-
-
-export{salvarTags, adicionarTag, listarTagsValidas, validarTag, dividirTags};
+export {
+  salvarTags,
+  adicionarTag,
+  listarTagsValidas,
+  validarTag,
+  dividirTags,
+  tags,
+};

@@ -3,7 +3,7 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
-const afn = [];
+export const afn = [];
 const AFlambda = [];
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)

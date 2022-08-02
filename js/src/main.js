@@ -3,8 +3,16 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
-import {salvarTags, adicionarTag, listarTagsValidas, dividirTags} from './tags.js';
-
+import {
+  salvarTags,
+  adicionarTag,
+  listarTagsValidas,
+  dividirTags,
+  tags,
+} from "./tags.js";
+import { afn as AFN } from "./automato.js";
+const inquirer = require("inquirer");
+const lineReader = require("line-reader");
 
 function main(restart) {
   const caminho = "";
