@@ -2,7 +2,7 @@
 // Denner Efisio Emanuel Reis - 201735008
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
-
+import { montarAutomato } from "./automato";
 const fs = require("fs");
 const tags = [];
 
@@ -99,6 +99,7 @@ function adicionarTag(line) {
       nome,
       descricao,
     });
+    montarAutomato(descricao);
     printMessage("INFO", "A TAG foi adicionada com sucesso");
   } else {
     printMessage("ERRO", "TAG inválida");
