@@ -290,7 +290,6 @@ cria um objeto com os estados, transicoes e alfabeto e insere no afn
 */
 function afnLambdaParaAfn(aut, fecho) {
   var aux1, aux2;
-  const transicoes = [];
   aux1 = aut.estados.inicial.map((i) => i);
   aux1 = aux1
     .map((f) => {
@@ -305,8 +304,10 @@ function afnLambdaParaAfn(aut, fecho) {
       return _fecho.map((r) => r.transicoes).flat();
     })
     .flat();
-  const inicio = Array.from(new Set(aux1));
-  const fim = Array.from(new Set(aux2));
+  const inicial = Array.from(new Set(aux1));
+  const final = Array.from(new Set(aux2));
+
+  const transicoes = [];
 
   const semLambda = aut.transicoes.filter((t) => t.simbolo !== "lambda");
   const comLambda = aut.transicoes.filter((t) => t.simbolo === "lambda");
@@ -326,7 +327,9 @@ function afnLambdaParaAfn(aut, fecho) {
       while (next === true) {
         if (aux.length === 0) next = false;
         aux.forEach((t) => {
-          const proxTransicao = comLambda.filter((l) => l.origem === t.destino);
+          const proxTransicao = comLambda.filter((l) => {
+            return l.origem === t.destino;
+          });
           if (proxTransicao.length > 0) {
             const validaTransicao = proxTransicao.filter((a) => {
               return transicoes.filter((t) => {
@@ -341,7 +344,7 @@ function afnLambdaParaAfn(aut, fecho) {
               transicoes.push({
                 origem: t.ref.origem,
                 destino: v.destino,
-                simbolo: t.simbolo,
+                simbolo: t.ref.simbolo,
               });
               aux.push({
                 ...v,
@@ -357,8 +360,8 @@ function afnLambdaParaAfn(aut, fecho) {
   const alfabeto = criarAlfabeto(transicoes.flat(2));
   const afnProps = {
     estados: {
-      inicio,
-      fim,
+      inicial,
+      final,
     },
     transicoes,
     alfabeto,
