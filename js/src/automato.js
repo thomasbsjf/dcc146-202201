@@ -202,3 +202,171 @@ function automatoConcatenacao(aut1, aut2) {
 
   return automato;
 }
+/*
+ * Objetivo da função: criar o fecho lambda apartir do automato passado como parametro
+ * cria uma constante fecho para armazenar os fechos para.
+ * remove os estados repetidos e ordena eles.
+ * Filtra as transicoes do automato iguais a lambda em uma variavel aux
+ * cria uma variavel transicao que recebe as transicoes da variavel auxiliar e filtra as possuem a origem igual ao estado
+ * Para cada estado, verifica se o tamanho de transicoes é maior que 0. Para cada transição cujo a origem é igual ao estado é armazenado em aux2
+ * enquanto for verdadeiro, percorre a aux2 e para cada valor faz um novo filtro na aux1 para pegar quando o valor for igual a origem.
+ * Para cada valor, procura o index cujo valor é igual a -1 e se for o estadoFecho recebe o destino e aux2 tambem.
+ * salva os estados e transicoes no array fecho e passa como parametro para funcao afnLambdaParaAfn.
+ */
+
+function fechoLambda(aut) {
+  const fecho = [];
+  var estados = Array.from(
+    new Set(
+      aut.transicoes
+        .map((t) => {
+          return [t.origem, t.destino];
+        })
+        .flat()
+    )
+  ).sort((a, b) => (a > b ? 1 : -1));
+  const aux1 = aut.transicoes.filter((t) => t.simbolo === "lambda");
+  estados.forEach((estado) => {
+    var transicoes = aux1.filter((a) => a.origem === estado);
+    if (transicoes.length > 0) {
+      var estadosFecho = [estado];
+      var aux2 = [];
+      transicoes.forEach((t) => {
+        estadosFecho.push(t.destino);
+        aux2.push(t.destino);
+      });
+      var next = true;
+      while (next === true) {
+        aux2.forEach((aux) => {
+          var transicoes = aux1.filter((a) => a.origem === aux);
+          transicoes.forEach((t) => {
+            if (estadosFecho.findIndex((e) => e === t) === -1) {
+              estadosFecho.push(t.destino);
+              aux2.push(t.destino);
+            }
+          });
+          aux2.splice(0, 1);
+        });
+        if (aux2.length === 0) {
+          next = false;
+        }
+      }
+      fecho.push({
+        estado,
+        transicoes: estadosFecho,
+      });
+    } else {
+      fecho.push({
+        estado,
+        transicoes: [estado],
+      });
+    }
+  });
+  afnLambdaParaAfn(aut, fecho);
+}
+/*
+cria um array a partir dos estados iniciais do automato recebido como parametro e salva na variavel aux1. 
+após isso ataualiza para um novo array que possui os estados do fecho igual a cada valor do antigo array e 
+retorna um novo array com as transicoese remove os subarrays.
+faz a mesma coisa com os estados finais
+
+remove os valores repitidos das varieis auxiliares de inicio e fim.
+cria um array de transicoes que vai receber as transicoes afn 
+verifica se as transicoes ja existes ao filtrar aquelas que possuem origem, destino e simbolo diferentes da proxima transicao
+e para cada valor insere no array transicao sua origem, destino e simbolo
+
+cria um objeto com os estados, transicoes e alfabeto e insere no afn
+
+*/
+function afnLambdaParaAfn(aut, fecho) {
+  var aux1, aux2;
+  const transicoes = [];
+  aux1 = aut.estados.inicio.map((i) => i);
+  aux1 = aux1
+    .map((f) => {
+      var _fecho = fecho.filter((v) => v.estado === f);
+      return _fecho.map((r) => r.transicoes).flat();
+    })
+    .flat();
+  aux2 = aut.estados.final.map((i) => i);
+  aux2 = aux2
+    .map((f) => {
+      var _fecho = fecho.filter((v) => v.estado === f);
+      return _fecho.map((r) => r.transicoes).flat();
+    })
+    .flat();
+  const inicio = Array.from(new Set(aux1));
+  const fim = Array.from(new Set(aux2));
+
+  const semLambda = aut.transicoes.filter((t) => t.simbolo !== "lambda");
+  const comLambda = aut.transicoes.filter((t) => t.simbolo === "lambda");
+
+  fecho.map((f) => {
+    const transicaoAfn = semLambda.filter((t) => t.origem === f.estado);
+    if (transicaoAfn.length > 0) {
+      transicaoAfn.map((t) => transicoes.push(t));
+      var next = true;
+      const aux = [];
+      transicaoAfn.forEach((t) => {
+        aux.push({
+          ...t,
+          ref: t,
+        });
+      });
+      while (next === true) {
+        if (aux.length === 0) next = false;
+        aux.forEach((t) => {
+          const proxTransicao = comLambda.filter((l) => l.origem === t.destino);
+          if (proxTransicao.length > 0) {
+            const validaTransicao = proxTransicao.filter((a) => {
+              return transicoes.filter((t) => {
+                return (
+                  t.origem !== a.origem &&
+                  t.destino !== a.destino &&
+                  t.simbolo !== a.simbolo
+                );
+              });
+            });
+            validaTransicao.forEach((v) => {
+              transicoes.push({
+                origem: t.ref.origem,
+                destino: v.destino,
+                simbolo: t.simbolo,
+              });
+              aux.push({
+                ...v,
+                ref: t.ref,
+              });
+            });
+          }
+          aux.splice(0, 1);
+        });
+      }
+    }
+  });
+  const alfabeto = criarAlfabeto(transicoes.flat(2));
+  const afnProps = {
+    estados: {
+      inicio,
+      fim,
+    },
+    transicoes,
+    alfabeto,
+  };
+  afn.push(afnProps);
+}
+
+/*
+gera um alfabeto apartir das transicoes passadas como parametro.
+para cada transicao, insere no alfabeto os simbolos da transicao passada como parametro
+e retorna um array sem nenhum simbolo repetido
+*/
+
+function criarAlfabeto(transicoes) {
+  const alfabeto = [];
+  transicoes.forEach((transicao) => {
+    alfabeto.push(transicao.simbolo);
+  });
+
+  return Array.from(new Set(alfabeto));
+}
