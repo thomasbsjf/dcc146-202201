@@ -110,3 +110,5 @@ function salvarTags(file) {
     stream.end();
   });
 }
+
+export{salvarTags, adicionarTag, listarTagsValidas, validarTag};

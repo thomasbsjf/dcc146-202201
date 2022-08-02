@@ -1,3 +1,5 @@
+import {salvarTags, adicionarTag, listarTagsValidas, validarTag} from './tags.js';
+
 function index(restart) {
   if (restart) {
     inquirer
@@ -46,7 +48,7 @@ function index(restart) {
             index(true);
           } else if (validOption === ":l") {
             listarTagsValidas();
-            printMessage("INFO", "Listagem das tags válidas realizada");
+            printMessage("INFO", "Listagem das tags validas realizada");
             index(true);
           } else if (validOption === ":q") {
             printMessage("INFO", "Programa finalizado com sucesso");
