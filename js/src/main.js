@@ -3,7 +3,7 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
-import {salvarTags, adicionarTag, listarTagsValidas, validarTag, dividirTags} from './tags.js';
+import {salvarTags, adicionarTag, listarTagsValidas, dividirTags} from './tags.js';
 
 
 function main(restart) {

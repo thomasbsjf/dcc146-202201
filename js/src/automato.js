@@ -1,8 +1,10 @@
+// Alunos:
+// Denner Efisio Emanuel Reis - 201735008
+// Thomas Santos - 201776034
+// Igor Westermann Lima - 201876021
+
 const afn = [];
 const AFlambda = [];
-
-
-
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
  * Itera pela tag e de acordo com o simbolo adiciona um novo estado ou executa operacao
@@ -361,7 +363,7 @@ function afnLambdaParaAfn(aut, fecho) {
     transicoes,
     alfabeto,
   };
-  AFN.push(afnProps);
+  afn.push(afnProps);
 }
 
 /*

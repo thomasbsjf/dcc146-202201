@@ -1,3 +1,8 @@
+// Alunos:
+// Denner Efisio Emanuel Reis - 201735008
+// Thomas Santos - 201776034
+// Igor Westermann Lima - 201876021
+
 const inquirer = require("inquirer");
 const lineReader = require("line-reader");
 const fs = require("fs");
