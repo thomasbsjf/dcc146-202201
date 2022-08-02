@@ -1,4 +1,4 @@
-
+const afn = [];
 const AFlambda = [];
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
