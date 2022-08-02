@@ -12,7 +12,7 @@ const AFlambda = [];
  * Apos executar operacao adiciona o automato novo na pilha novamente
  * Falta completar o fecho lambda
  */
-function montarAutomato(tag) {
+export function montarAutomato(tag) {
   var totalEstados = 0;
   const pilha = [];
   for (i = 0; i < tag.length; i++) {
