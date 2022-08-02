@@ -5,7 +5,6 @@
  * Apos executar operacao adiciona o automato novo na pilha novamente
  * Falta completar o fecho lambda
  */
-
 function montaAutomato(tag) {
   var totalEstados = 0;
   const pilha = [];
@@ -202,6 +201,7 @@ function automatoConcatenacao(aut1, aut2) {
 
   return automato;
 }
+
 /*
  * Objetivo da função: criar o fecho lambda apartir do automato passado como parametro
  * cria uma constante fecho para armazenar os fechos para.
@@ -213,7 +213,6 @@ function automatoConcatenacao(aut1, aut2) {
  * Para cada valor, procura o index cujo valor é igual a -1 e se for o estadoFecho recebe o destino e aux2 tambem.
  * salva os estados e transicoes no array fecho e passa como parametro para funcao afnLambdaParaAfn.
  */
-
 function fechoLambda(aut) {
   const fecho = [];
   var estados = Array.from(
@@ -264,6 +263,7 @@ function fechoLambda(aut) {
   });
   afnLambdaParaAfn(aut, fecho);
 }
+
 /*
 cria um array a partir dos estados iniciais do automato recebido como parametro e salva na variavel aux1. 
 após isso ataualiza para um novo array que possui os estados do fecho igual a cada valor do antigo array e 
@@ -361,7 +361,6 @@ cria um alfabeto apartir das transicoes passadas como parametro.
 para cada transicao, insere no alfabeto os simbolos da transicao passada como parametro
 e retorna um array sem nenhum simbolo repetido
 */
-
 function criarAlfabeto(transicoes) {
   const alfabeto = [];
   transicoes.forEach((transicao) => {

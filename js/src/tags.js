@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const lineReader = require("line-reader");
 const fs = require("fs");
 const tags = [];
+
 function printMessage(type, text) {
   console.log(`[${type}] ${text}`);
 }
@@ -111,4 +112,103 @@ function salvarTags(file) {
   });
 }
 
-export{salvarTags, adicionarTag, listarTagsValidas, validarTag};
+function dividirTags(criterio) {
+  var indice = [];
+  tags.forEach((tag) => {
+    indice.push({
+      index: 0,
+      origem: 1,
+    });
+  });
+  const criterioInicial = criterio;
+  var divisaoParcial = "";
+  var continua = true;
+  while (continua) {
+    const resultado = [];
+    AFN.forEach((automato, i) => {
+      resultado.push({ pos: i, consome: validarSeConsome(automato, criterio) });
+    });
+    if (resultado.length === 0) {
+      continua = false;
+    } else {
+      const ordenarResultado = resultado.sort((a, b) =>
+        a.consome < b.consome ? 1 : -1
+      );
+      divisaoParcial =
+        divisaoParcial + " " + tags[ordenarResultado[0].pos].nome;
+      criterio = criterio.substr(ordenarResultado[0].consome);
+      if (ordenarResultado[0].consome === -1) {
+        continua = false;
+        divisaoParcial = "";
+      }
+      if (criterio.length === 0) {
+        continua = false;
+      }
+    }
+  }
+  if (divisaoParcial === "") {
+    printMessage("ERRO", "Não foi possível dividir a TAG");
+    return;
+  } else {
+    divisao.push({
+      criterio: criterioInicial,
+      divisao: divisaoParcial,
+    });
+    console.log(divisaoParcial);
+  }
+}
+
+function validarSeConsome(automato, criterio) {
+  const inicial = automato.estados.inicial;
+  const final = automato.estados.final;
+  var estadoAtual = [];
+  var indice = -1;
+  for (i = 0; i < criterio.length; i++) {
+    if (criterio[i] !== "*" && criterio[i] !== "." && criterio[i] !== "+") {
+      if (criterio[i].charCodeAt(0) === 47) {
+        i++;
+      }
+      if (i === 0) {
+        var transicoes = automato.transicoes.filter(
+          (transicao) => transicao.simbolo === criterio[0]
+        );
+        if (transicoes.length > 0) {
+          const elementos = transicoes.filter((transicao) => {
+            return inicial.includes(transicao.origem);
+          });
+          if (elementos.length === 0) {
+            return -1;
+          } else {
+            indice = 1;
+            elementos.forEach((e) => estadoAtual.push(e.destino));
+          }
+        } else {
+          return -1;
+        }
+      } else {
+        const validarFinal = estadoAtual.filter((e) => {
+          return final.includes(e);
+        });
+        if (validarFinal.length > 0) {
+          indice = indice < i ? i + 1 : indice;
+        }
+        var transicoes = automato.transicoes.filter((transicao) => {
+          return (
+            transicao.simbolo === criterio[i] &&
+            estadoAtual.includes(transicao.origem)
+          );
+        });
+        if (transicoes.length > 0) {
+          transicoes.forEach((e) => estadoAtual.push(e.destino));
+        } else {
+          return indice;
+        }
+      }
+    }
+  }
+  return indice;
+}
+
+
+
+export{salvarTags, adicionarTag, listarTagsValidas, validarTag, dividirTags};
