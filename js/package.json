@@ -4,10 +4,11 @@
     "line-reader": "^0.4.0"
   },
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/main.js"
   },
   "name": "js",
+  "type": "module",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "license": "MIT"
 }

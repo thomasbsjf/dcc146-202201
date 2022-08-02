@@ -2,9 +2,9 @@
 // Denner Efisio Emanuel Reis - 201735008
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
-import { montarAutomato } from "./automato";
-const fs = require("fs");
-const tags = [];
+import { montarAutomato } from "./automato.js";
+import fs from "fs";
+export const tags = [];
 
 function printMessage(type, text) {
   console.log(`[${type}] ${text}`);
@@ -23,7 +23,7 @@ function validarTag(nome, descricao) {
     return false;
   }
   var pilha = [];
-  for (i = 0; i < descricao.length; i++) {
+  for (let i = 0; i < descricao.length; i++) {
     if (descricao[i] === "*") {
       if (pilha.length === 0) {
         printMessage("ERRO", "Pilha vazia");
@@ -34,8 +34,8 @@ function validarTag(nome, descricao) {
     } else {
       if (descricao[i] === "+" || descricao[i] === ".") {
         if (pilha.length > 1) {
-          primeiroElemento = pilha.pop();
-          segundoElemento = pilha.pop();
+          var primeiroElemento = pilha.pop();
+          var segundoElemento = pilha.pop();
           pilha.push(primeiroElemento + descricao[i] + segundoElemento);
         } else {
           printMessage(
@@ -60,7 +60,7 @@ function validarTag(nome, descricao) {
             return false;
           }
         } else {
-          aux = "";
+          var aux = "";
           aux += descricao[i];
           pilha.push(aux);
         }
@@ -73,16 +73,17 @@ function validarTag(nome, descricao) {
   return false;
 }
 
-function listarTagsValidas() {
+export function listarTagsValidas() {
   tags.forEach((tag) => {
     console.log(`${tag.nome}: ${tag.descricao}`);
   });
 }
 
-function adicionarTag(line) {
-  start = false;
-  (nome = ""), (descricao = "");
-  for (i = 0; i < line.length; i++) {
+export function adicionarTag(line) {
+  var start = false;
+  var nome = "";
+  var descricao = "";
+  for (let i = 0; i < line.length; i++) {
     if (line[i] == ":" && !start) {
       i++;
       start = true;
@@ -106,7 +107,7 @@ function adicionarTag(line) {
   }
 }
 
-function salvarTags(file) {
+export function salvarTags(file) {
   const stream = fs.createWriteStream(`src/${file}`);
   stream.once("open", () => {
     tags.forEach((tag) => {
@@ -116,7 +117,7 @@ function salvarTags(file) {
   });
 }
 
-function dividirTags(criterio) {
+export function dividirTags(criterio) {
   var indice = [];
   tags.forEach((tag) => {
     indice.push({
@@ -212,12 +213,3 @@ function validarSeConsome(automato, criterio) {
   }
   return indice;
 }
-
-export {
-  salvarTags,
-  adicionarTag,
-  listarTagsValidas,
-  validarTag,
-  dividirTags,
-  tags,
-};

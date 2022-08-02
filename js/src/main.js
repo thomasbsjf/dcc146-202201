@@ -11,8 +11,8 @@ import {
   tags,
 } from "./tags.js";
 import { afn as AFN } from "./automato.js";
-const inquirer = require("inquirer");
-const lineReader = require("line-reader");
+import lineReader from "line-reader";
+import inquirer from "inquirer";
 
 function main(restart) {
   const caminho = "";

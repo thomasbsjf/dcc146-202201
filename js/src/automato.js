@@ -15,7 +15,7 @@ const AFlambda = [];
 export function montarAutomato(tag) {
   var totalEstados = 0;
   const pilha = [];
-  for (i = 0; i < tag.length; i++) {
+  for (let i = 0; i < tag.length; i++) {
     if (tag[i] === "+") {
       const aut1 = pilha.pop();
       const aut2 = pilha.pop();
@@ -291,7 +291,7 @@ cria um objeto com os estados, transicoes e alfabeto e insere no afn
 function afnLambdaParaAfn(aut, fecho) {
   var aux1, aux2;
   const transicoes = [];
-  aux1 = aut.estados.inicio.map((i) => i);
+  aux1 = aut.estados.inicial.map((i) => i);
   aux1 = aux1
     .map((f) => {
       var _fecho = fecho.filter((v) => v.estado === f);
