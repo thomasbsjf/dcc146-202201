@@ -357,7 +357,7 @@ function afnLambdaParaAfn(aut, fecho) {
 }
 
 /*
-gera um alfabeto apartir das transicoes passadas como parametro.
+cria um alfabeto apartir das transicoes passadas como parametro.
 para cada transicao, insere no alfabeto os simbolos da transicao passada como parametro
 e retorna um array sem nenhum simbolo repetido
 */
