@@ -1,3 +1,8 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/vscode,c++,executable
+# Edit at https://www.toptal.com/developers/gitignore?templates=vscode,c++,executable
+
+### C++ ###
 # Prerequisites
 *.d
 
@@ -10,6 +15,12 @@
 # Precompiled Headers
 *.gch
 *.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
 
 # Compiled Dynamic libraries
 *.so
@@ -30,3 +41,25 @@
 *.exe
 *.out
 *.app
+
+### Executable ###
+*.bat
+*.cgi
+*.com
+*.gadget
+*.jar
+*.pif
+*.vb
+*.wsf
+
+### vscode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+*.txt
+
+# End of https://www.toptal.com/developers/gitignore/api/vscode,c++,executable

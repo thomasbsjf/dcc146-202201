@@ -1,11 +1,12 @@
 {
-    "files.associations": {
-        ".sequelizerc": "javascript",
-        ".stylelintrc": "json",
-        ".prettierrc": "json",
-        "sstream": "cpp",
-        "iosfwd": "cpp",
-        "string": "cpp",
-        "vector": "cpp"
-    }
+  "files.associations": {
+    "sstream": "cpp",
+    "regex": "cpp",
+    "ostream": "cpp",
+    "string": "cpp",
+    "iosfwd": "cpp",
+    "iostream": "cpp",
+    "algorithm": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
 }

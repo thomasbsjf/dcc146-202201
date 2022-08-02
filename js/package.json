@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "inquirer": "^8.1.2",
+    "line-reader": "^0.4.0"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "name": "js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}
