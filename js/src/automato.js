@@ -25,7 +25,7 @@ function montaAutomato(tag) {
     } else if (tag[i] === ".") {
       const aut1 = pilha.pop();
       const aut2 = pilha.pop();
-      const automato = automatoConcatenacao(automato1, aut2);
+      const automato = automatoConcatenacao(aut1, aut2);
       pilha.push(automato);
     } else {
       const automato = automatoSimples(tag[i], totalEstados);
