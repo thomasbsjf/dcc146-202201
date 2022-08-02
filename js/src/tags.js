@@ -2,11 +2,13 @@
 // Denner Efisio Emanuel Reis - 201735008
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
-import { montarAutomato } from "./automato.js";
+import { montarAutomato, afn as AFN} from "./automato.js";
 import fs from "fs";
+//import { afn as AFN } from "./automato.js";
+
 export const tags = [];
 
-function printMessage(type, text) {
+export function printMessage(type, text) {
   console.log(`[${type}] ${text}`);
 }
 

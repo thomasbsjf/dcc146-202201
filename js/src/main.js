@@ -9,6 +9,7 @@ import {
   listarTagsValidas,
   dividirTags,
   tags,
+  printMessage
 } from "./tags.js";
 import { afn as AFN } from "./automato.js";
 import lineReader from "line-reader";
