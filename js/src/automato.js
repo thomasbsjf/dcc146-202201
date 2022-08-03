@@ -3,7 +3,7 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
-export const afn = [];
+export const AFN = [];
 const AFlambda = [];
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
@@ -358,16 +358,18 @@ function afnLambdaParaAfn(aut, fecho) {
     }
   });
   const alfabeto = criarAlfabeto(transicoes.flat(2));
-  const afnProps = {
+  // const afnProps = 
+  AFN.push({
     estados: {
       inicial,
       final,
     },
     transicoes,
     alfabeto,
-  };
-  afn.push(afnProps);
+  });
+  console.log("teste1:", AFN);
 }
+
 
 /*
 cria um alfabeto apartir das transicoes passadas como parametro.

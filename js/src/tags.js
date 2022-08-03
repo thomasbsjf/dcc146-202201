@@ -2,15 +2,14 @@
 // Denner Efisio Emanuel Reis - 201735008
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
-import { montarAutomato, afn as AFN } from "./automato.js";
+import { montarAutomato, AFN } from "./automato.js";
 import fs from "fs";
-//import { afn as AFN } from "./automato.js";
 
 export const tags = [];
-const divisao = [];
+export const divisao = [];
 
 export function printMessage(type, text) {
-  console.log(`[${type}] ${text}`);
+  console.log(`[${type}] ${text}`)
 }
 
 function validarTag(nome, descricao) {
@@ -118,10 +117,9 @@ export function salvarTags(file) {
     stream.end();
   });
 }
-
 export function dividirTags(criterio) {
   var indice = [];
-  tags.forEach((tag) => {
+  tags.forEach((tags) => {
     indice.push({
       index: 0,
       origem: 1,
@@ -132,6 +130,8 @@ export function dividirTags(criterio) {
   var continua = true;
   while (continua) {
     const resultado = [];
+    console.log("afn: ", AFN);
+
     AFN.forEach((automato, i) => {
       resultado.push({ pos: i, consome: validarSeConsome(automato, criterio) });
     });
@@ -161,7 +161,6 @@ export function dividirTags(criterio) {
       criterio: criterioInicial,
       divisao: divisaoParcial,
     });
-    console.log(divisaoParcial);
   }
 }
 
