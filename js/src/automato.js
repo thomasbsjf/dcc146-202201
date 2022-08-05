@@ -5,6 +5,26 @@
 
 export const AFN = [];
 const AFlambda = [];
+
+class Transicao {
+  constructor(origem, destino, simbolo) {
+    this.origem = origem;
+    this.destino = destino;
+    this.simbolo = simbolo;
+  }
+}
+class Transicoes {
+  constructor() {
+    this.transicoes = [];
+  }
+  // cria uma nova transicao e salva na colecao
+  newTransicao(origem, destino, simbolo) {
+    let p = new Transicao(origem, destino, simbolo);
+    this.transicoes.push({ origem, destino, simbolo });
+    return p;
+  }
+}
+
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
  * Itera pela tag e de acordo com o simbolo adiciona um novo estado ou executa operacao
@@ -98,44 +118,32 @@ function automatoSimples(simbolo, i) {
 function automatoUniao(aut1, aut2, i) {
   const ini = i + 1;
   const fin = i + 2;
-  const transicoes = [];
+  const transicoes = new Transicoes();
   const alfabeto = [];
-  aut1.transicoes.forEach((t) => transicoes.push(t));
-  aut2.transicoes.forEach((t) => transicoes.push(t));
+  aut1.transicoes.forEach((t) =>
+    transicoes.newTransicao(t.origem, t.destino, t.simbolo)
+  );
+  aut2.transicoes.forEach((t) =>
+    transicoes.newTransicao(t.origem, t.destino, t.simbolo)
+  );
   aut1.alfabeto.forEach((a) => alfabeto.push(a));
   aut2.alfabeto.forEach((a) => alfabeto.push(a));
   aut1.estados.final.forEach((f) => {
-    transicoes.push({
-      origem: f,
-      destino: fin,
-      simbolo: "lambda",
-    });
+    transicoes.newTransicao(f, fin, "lambda");
   });
 
   aut2.estados.final.forEach((f) => {
-    transicoes.push({
-      origem: f,
-      destino: fin,
-      simbolo: "lambda",
-    });
+    transicoes.newTransicao(f, fin, "lambda");
   });
   aut1.estados.inicial.forEach((i) => {
-    transicoes.push({
-      origem: ini,
-      destino: i,
-      simbolo: "lambda",
-    });
+    transicoes.newTransicao(ini, i, "lambda");
   });
   aut2.estados.inicial.forEach((i) => {
-    transicoes.push({
-      origem: ini,
-      destino: i,
-      simbolo: "lambda",
-    });
+    transicoes.newTransicao(ini, i, "lambda");
   });
   alfabeto.push("lambda");
   const automato = {
-    transicoes: transicoes,
+    transicoes: transicoes.transicoes,
     estados: {
       inicial: [ini],
       final: [fin],
@@ -170,7 +178,7 @@ function criaFechoKleene(aut1) {
       inicial: estados,
       final: estados,
     },
-    transicoes: transicoes,
+    transicoes: transicoes.transicoes,
     alfabeto: Array.from(new Set(aut1.alfabeto, "lambda")),
   };
   return automato;
@@ -185,19 +193,19 @@ function criaFechoKleene(aut1) {
  * Cria um novo automato onde os estados iniciais sao do aut2 e os finais os do aut1
  */
 function automatoConcatenacao(aut1, aut2) {
-  const transicoes = [];
+  const transicoes = new Transicoes();
   const alfabeto = [];
-  aut1.transicoes.forEach((t) => transicoes.push(t));
-  aut2.transicoes.forEach((t) => transicoes.push(t));
+  aut1.transicoes.forEach((t) =>
+    transicoes.newTransicao(t.origem, t.destino, t, simbolo)
+  );
+  aut2.transicoes.forEach((t) =>
+    transicoes.newTransicao(t.origem, t.destino, t, simbolo)
+  );
   aut1.alfabeto.forEach((a) => alfabeto.push(a));
   aut2.alfabeto.forEach((a) => alfabeto.push(a));
   aut1.estados.inicial.forEach((i) => {
     aut2.estados.final.forEach((f) => {
-      transicoes.push({
-        origem: f,
-        destino: i,
-        simbolo: "lambda",
-      });
+      transicoes.newTransicao(f, i, "lambda");
     });
   });
   const automato = {
@@ -275,13 +283,13 @@ function fechoLambda(aut) {
 }
 
 /*
-cria um array a partir dos estados iniciais do automato recebido como parametro e salva na variavel aux1. 
-após isso ataualiza para um novo array que possui os estados do fecho igual a cada valor do antigo array e 
+cria um array a partir dos estados iniciais do automato recebido como parametro e salva na variavel aux1.
+após isso ataualiza para um novo array que possui os estados do fecho igual a cada valor do antigo array e
 retorna um novo array com as transicoese remove os subarrays.
 faz a mesma coisa com os estados finais
 
 remove os valores repitidos das varieis auxiliares de inicio e fim.
-cria um array de transicoes que vai receber as transicoes afn 
+cria um array de transicoes que vai receber as transicoes afn
 verifica se as transicoes ja existes ao filtrar aquelas que possuem origem, destino e simbolo diferentes da proxima transicao
 e para cada valor insere no array transicao sua origem, destino e simbolo
 
@@ -307,7 +315,7 @@ function afnLambdaParaAfn(aut, fecho) {
   const inicial = Array.from(new Set(aux1));
   const final = Array.from(new Set(aux2));
 
-  const transicoes = [];
+  const transicoes = new Transicoes();
 
   const semLambda = aut.transicoes.filter((t) => t.simbolo !== "lambda");
   const comLambda = aut.transicoes.filter((t) => t.simbolo === "lambda");
@@ -315,7 +323,9 @@ function afnLambdaParaAfn(aut, fecho) {
   fecho.map((f) => {
     const transicaoAfn = semLambda.filter((t) => t.origem === f.estado);
     if (transicaoAfn.length > 0) {
-      transicaoAfn.map((t) => transicoes.push(t));
+      transicaoAfn.map((t) => {
+        transicoes.newTransicao(t.origem, t.destino, t.simbolo);
+      });
       var next = true;
       const aux = [];
       transicaoAfn.forEach((t) => {
@@ -332,7 +342,9 @@ function afnLambdaParaAfn(aut, fecho) {
           });
           if (proxTransicao.length > 0) {
             const validaTransicao = proxTransicao.filter((a) => {
-              return transicoes.filter((t) => {
+              return transicoes.transicoes.filter((t) => {
+                console.log("teste 3: ", transicoes);
+
                 return (
                   t.origem !== a.origem &&
                   t.destino !== a.destino &&
@@ -341,11 +353,7 @@ function afnLambdaParaAfn(aut, fecho) {
               });
             });
             validaTransicao.forEach((v) => {
-              transicoes.push({
-                origem: t.ref.origem,
-                destino: v.destino,
-                simbolo: t.ref.simbolo,
-              });
+              transicoes.newTransicao(t.ref.origem, v.destino, t.ref.simbolo);
               aux.push({
                 ...v,
                 ref: t.ref,
@@ -357,8 +365,8 @@ function afnLambdaParaAfn(aut, fecho) {
       }
     }
   });
-  const alfabeto = criarAlfabeto(transicoes.flat(2));
-  // const afnProps = 
+  const alfabeto = criarAlfabeto(transicoes.transicoes.flat(2));
+  // const afnProps =
   AFN.push({
     estados: {
       inicial,
@@ -367,9 +375,7 @@ function afnLambdaParaAfn(aut, fecho) {
     transicoes,
     alfabeto,
   });
-  console.log("teste1:", AFN);
 }
-
 
 /*
 cria um alfabeto apartir das transicoes passadas como parametro.
