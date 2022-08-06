@@ -194,12 +194,13 @@ function criaFechoKleene(aut1) {
  */
 function automatoConcatenacao(aut1, aut2) {
   const transicoes = new Transicoes();
+  
   const alfabeto = [];
   aut1.transicoes.forEach((t) =>
-    transicoes.newTransicao(t.origem, t.destino, t, simbolo)
+    transicoes.newTransicao(t.origem, t.destino, t.simbolo)
   );
   aut2.transicoes.forEach((t) =>
-    transicoes.newTransicao(t.origem, t.destino, t, simbolo)
+    transicoes.newTransicao(t.origem, t.destino, t.simbolo)
   );
   aut1.alfabeto.forEach((a) => alfabeto.push(a));
   aut2.alfabeto.forEach((a) => alfabeto.push(a));
@@ -210,7 +211,7 @@ function automatoConcatenacao(aut1, aut2) {
   });
   const automato = {
     alfabeto,
-    transicoes,
+    transicoes: transicoes.transicoes,
     estados: {
       inicial: aut2.estados.inicial.map((i) => i),
       final: aut1.estados.final.map((f) => f),
@@ -372,7 +373,7 @@ function afnLambdaParaAfn(aut, fecho) {
       inicial,
       final,
     },
-    transicoes,
+    transicoes: transicoes.transicoes,
     alfabeto,
   });
 }
