@@ -163,14 +163,10 @@ function automatoUniao(aut1, aut2, i) {
  */
 function criaFechoKleene(aut1) {
   const estados = aut1.estados.inicial.map((i) => i);
-  const transicoes = aut1.transicoes;
+  const transicoes = new Transicoes();
   aut1.estados.final.forEach((f) => {
     aut1.estados.inicial.forEach((i) => {
-      transicoes.push({
-        origem: f,
-        destino: i,
-        simbolo: "lambda",
-      });
+      transicoes.newTransicao(i.origem, i.destino, i.simbolo);
     });
   });
   const automato = {
