@@ -3,6 +3,7 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 import { montarAutomato, AFN } from "./automato.js";
+import { Transicoes } from "./transicao.js";
 import fs from "fs";
 
 export const tags = [];
@@ -12,6 +13,14 @@ export function printMessage(type, text) {
   console.log(`[${type}] ${text}`)
 }
 
+/*
+  Função responsável por validar se a Tag é válida.
+  Faz uso de uma variavel auxiliar para checar se já existe uma tag com o nome
+  Faz uso de uma pilha para armazenar os caracteres
+  Diferencia os caracteres especiais e adiciona \\ se aparecerem
+  
+
+*/
 function validarTag(nome, descricao) {
   var auxiliar = true;
   tags.forEach((tag) => {
@@ -20,14 +29,14 @@ function validarTag(nome, descricao) {
     }
   });
   if (!auxiliar) {
-    printMessage("Erro", "Este nome já está sendo utilizado");
+    printMessage("ERROR", "Nome da TAG ja utilizado");
     return false;
   }
   var pilha = [];
   for (let i = 0; i < descricao.length; i++) {
     if (descricao[i] === "*") {
       if (pilha.length === 0) {
-        printMessage("ERRO", "Pilha vazia");
+        printMessage("ERROR", "Pilha vazia");
         return false;
       }
       aux = pilha.pop();
@@ -35,13 +44,13 @@ function validarTag(nome, descricao) {
     } else {
       if (descricao[i] === "+" || descricao[i] === ".") {
         if (pilha.length > 1) {
-          var primeiroElemento = pilha.pop();
-          var segundoElemento = pilha.pop();
-          pilha.push(primeiroElemento + descricao[i] + segundoElemento);
+          var primeiroChar = pilha.pop();
+          var segundoChar = pilha.pop();
+          pilha.push(primeiroChar + descricao[i] + segundoChar);
         } else {
           printMessage(
-            "ERRO",
-            "É necessário que a pilha tenha pelo menos dois elementos"
+            "ERROR",
+            "São necessarios pelo menos dois elementos."
           );
           return false;
         }
@@ -74,12 +83,20 @@ function validarTag(nome, descricao) {
   return false;
 }
 
+/*
+  Função responsável por listar as tags validas criadas.
+*/
 export function listarTagsValidas() {
   tags.forEach((tag) => {
     console.log(`${tag.nome}: ${tag.descricao}`);
   });
 }
 
+/*
+  Função responsável adicionar novas tags.
+  Checa se existe algo antes do ":", se sim ao chegar no : pula 1 e começa a escrever a descrição da TAG
+  por fim VALIDA a Tag, salva em um objeto "tags" e chama a função para montar o automato da TAG passada
+*/
 export function adicionarTag(line) {
   var start = false;
   var nome = "";
@@ -104,10 +121,13 @@ export function adicionarTag(line) {
     montarAutomato(descricao);
     printMessage("INFO", "A TAG foi adicionada com sucesso");
   } else {
-    printMessage("ERRO", "TAG inválida");
+    printMessage("ERROR", "TAG digitada é inválida");
   }
 }
 
+/*
+  Função responsável por salvas as Tags Validas em um arquivo especificado.
+*/
 export function salvarTags(file) {
   const stream = fs.createWriteStream(`src/${file}`);
   stream.once("open", () => {
@@ -117,9 +137,11 @@ export function salvarTags(file) {
     stream.end();
   });
 }
+
+
 export function dividirTags(criterio) {
   var indice = [];
-  tags.forEach((tags) => {
+  tags.forEach((t) => {
     indice.push({
       index: 0,
       origem: 1,
@@ -154,7 +176,7 @@ export function dividirTags(criterio) {
     }
   }
   if (divisaoParcial === "") {
-    printMessage("ERRO", "Não foi possível dividir a TAG");
+    printMessage("ERROR", "Não foi possível dividir a TAG informada");
     return;
   } else {
     divisao.push({

@@ -17,6 +17,13 @@ import lineReader from "line-reader";
 import inquirer from "inquirer";
 import fs from "fs";
 
+
+/*
+  Função principal do programa, responsável por coordenar os comandos executados.
+  Checa se o primeiro char é : e chama as devidas funções que começam com esse caractere
+  Se não for, adiciona uma nova TAG.
+
+*/
 function main(restart) {
   const caminho = "";
   if (restart) {
@@ -68,7 +75,7 @@ function main(restart) {
             printMessage("INFO", "Divisão realizada com sucesso");
             main(true);
           } else if (validOption === ":a") {
-            listarAutomatosValidos();
+            listarAutomatos();
             printMessage(
               "INFO",
               "Listagem das definições formais dos autômatos."
@@ -95,12 +102,17 @@ function main(restart) {
   }
 }
 
-function listarAutomatosValidos() {
+
+/*
+  Função responsável por listar todos os Automatos criados informando suas devidas
+  Tags, Estados Iniciais e Finais, Alfabeto e transições realizadas.
+*/
+function listarAutomatos() {
   for (var i = 0; i < tags.length; i++) {
     console.log(`------------------------------------------`);
     console.log(`Tag: ${tags[i].nome}: ${tags[i].descricao}`);
     console.log(`------------------------------------------`);
-    console.log(`Automato:`);
+    console.log(`Informacoes sobre o Automato:`);
     console.log(`Estados Iniciais: ${AFN[i].estados.inicial}`);
     console.log(`Estados Finais: ${AFN[i].estados.final}`);
     console.log(`Alfabeto: ${AFN[i].alfabeto}`);
@@ -108,19 +120,22 @@ function listarAutomatosValidos() {
     console.log(`Transições: `);
     AFN[i].transicoes.forEach((transicao) => {
       console.log(
-        `origem: ${transicao.origem} - destino: ${transicao.destino} - simbolo: ${transicao.simbolo}`
+        `Origem: ${transicao.origem} - Destino: ${transicao.destino} - Simbolo: ${transicao.simbolo}`
       );
     });
   }
 }
 
+/*
+  Função responsável por imprimir em um arquivo as Tags divididas
+*/
 function imprimirArquivo(file) {
   const stream = fs.createWriteStream(`src/${file}`);
   stream.once("open", () => {
     divisao.forEach((resultado) => {
       // console.log("passou");
       stream.write(
-        `Parâmetro: ${resultado.criterio} ==================  Resultado: ${resultado.divisao}\n`
+        `Parâmetro: ${resultado.criterio} <===>  Resultado: ${resultado.divisao}\n`
       );
     });
     stream.end();

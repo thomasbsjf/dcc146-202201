@@ -3,27 +3,9 @@
 // Thomas Santos - 201776034
 // Igor Westermann Lima - 201876021
 
+import { Transicoes } from "./transicao.js";
 export const AFN = [];
 const AFlambda = [];
-
-class Transicao {
-  constructor(origem, destino, simbolo) {
-    this.origem = origem;
-    this.destino = destino;
-    this.simbolo = simbolo;
-  }
-}
-class Transicoes {
-  constructor() {
-    this.transicoes = [];
-  }
-  // cria uma nova transicao e salva na colecao
-  newTransicao(origem, destino, simbolo) {
-    let p = new Transicao(origem, destino, simbolo);
-    this.transicoes.push({ origem, destino, simbolo });
-    return p;
-  }
-}
 
 /*
  * Funcao responsavel por tirar os automatos da pilha e executar o tipo de operacao (uniao, concat, simples, kleene)
@@ -166,7 +148,7 @@ function criaFechoKleene(aut1) {
   const transicoes = new Transicoes();
   aut1.estados.final.forEach((f) => {
     aut1.estados.inicial.forEach((i) => {
-      transicoes.newTransicao(i.origem, i.destino, i.simbolo);
+      transicoes.newTransicao(f, i, "lambda");
     });
   });
   const automato = {
@@ -190,7 +172,7 @@ function criaFechoKleene(aut1) {
  */
 function automatoConcatenacao(aut1, aut2) {
   const transicoes = new Transicoes();
-  
+
   const alfabeto = [];
   aut1.transicoes.forEach((t) =>
     transicoes.newTransicao(t.origem, t.destino, t.simbolo)
@@ -340,7 +322,7 @@ function afnLambdaParaAfn(aut, fecho) {
           if (proxTransicao.length > 0) {
             const validaTransicao = proxTransicao.filter((a) => {
               return transicoes.transicoes.filter((t) => {
-                console.log("teste 3: ", transicoes);
+                //console.log("teste 3: ", transicoes);
 
                 return (
                   t.origem !== a.origem &&
@@ -363,7 +345,6 @@ function afnLambdaParaAfn(aut, fecho) {
     }
   });
   const alfabeto = criarAlfabeto(transicoes.transicoes.flat(2));
-  // const afnProps =
   AFN.push({
     estados: {
       inicial,
