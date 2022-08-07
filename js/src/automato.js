@@ -152,9 +152,6 @@ function criaFechoKleene(aut1) {
       transicoes.newTransicao(f, i, "lambda");
     });
   });
-  console.log("new transicoes: ", transicoes);
-  console.log("aut1:", aut1.transicoes);
-
   const automato = {
     estados: {
       inicial: estados,
@@ -355,12 +352,6 @@ function afnLambdaParaAfn(aut, fecho) {
     transicoes: transicoes.transicoes,
     alfabeto,
   });
-  // console.log("teste estado final afn: ", {
-  //   estados: {
-  //     inicial,
-  //     final,
-  //   },
-  // });
 }
 
 /*
