@@ -146,17 +146,21 @@ function automatoUniao(aut1, aut2, i) {
 function criaFechoKleene(aut1) {
   const estados = aut1.estados.inicial.map((i) => i);
   const transicoes = new Transicoes();
+  transicoes.transicoes.concat(aut1.transicoes);
   aut1.estados.final.forEach((f) => {
     aut1.estados.inicial.forEach((i) => {
       transicoes.newTransicao(f, i, "lambda");
     });
   });
+  console.log("new transicoes: ", transicoes);
+  console.log("aut1:", aut1.transicoes);
+
   const automato = {
     estados: {
       inicial: estados,
       final: estados,
     },
-    transicoes: transicoes.transicoes,
+    transicoes: aut1.transicoes.concat(transicoes.transicoes),
     alfabeto: Array.from(new Set(aut1.alfabeto, "lambda")),
   };
   return automato;
@@ -218,7 +222,7 @@ function fechoLambda(aut) {
         .map((t) => {
           return [t.origem, t.destino];
         })
-        .flat()
+        .flat(1)
     )
   ).sort((a, b) => (a > b ? 1 : -1));
   const aux1 = aut.transicoes.filter((t) => t.simbolo === "lambda");
@@ -281,16 +285,16 @@ function afnLambdaParaAfn(aut, fecho) {
   aux1 = aux1
     .map((f) => {
       var _fecho = fecho.filter((v) => v.estado === f);
-      return _fecho.map((r) => r.transicoes).flat();
+      return _fecho.map((r) => r.transicoes).flat(1);
     })
-    .flat();
+    .flat(1);
   aux2 = aut.estados.final.map((i) => i);
   aux2 = aux2
     .map((f) => {
       var _fecho = fecho.filter((v) => v.estado === f);
-      return _fecho.map((r) => r.transicoes).flat();
+      return _fecho.map((r) => r.transicoes).flat(1);
     })
-    .flat();
+    .flat(1);
   const inicial = Array.from(new Set(aux1));
   const final = Array.from(new Set(aux2));
 
@@ -322,8 +326,6 @@ function afnLambdaParaAfn(aut, fecho) {
           if (proxTransicao.length > 0) {
             const validaTransicao = proxTransicao.filter((a) => {
               return transicoes.transicoes.filter((t) => {
-                //console.log("teste 3: ", transicoes);
-
                 return (
                   t.origem !== a.origem &&
                   t.destino !== a.destino &&
@@ -353,6 +355,12 @@ function afnLambdaParaAfn(aut, fecho) {
     transicoes: transicoes.transicoes,
     alfabeto,
   });
+  // console.log("teste estado final afn: ", {
+  //   estados: {
+  //     inicial,
+  //     final,
+  //   },
+  // });
 }
 
 /*

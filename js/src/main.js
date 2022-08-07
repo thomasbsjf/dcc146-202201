@@ -116,7 +116,7 @@ function listarAutomatos() {
     console.log(`Estados Iniciais: ${AFN[i].estados.inicial}`);
     console.log(`Estados Finais: ${AFN[i].estados.final}`);
     console.log(`Alfabeto: ${AFN[i].alfabeto}`);
-    console.log("teste AFN: ", AFN);
+    // console.log("teste AFN: ", AFN);
     console.log(`Transições: `);
     AFN[i].transicoes.forEach((transicao) => {
       console.log(
@@ -133,7 +133,6 @@ function imprimirArquivo(file) {
   const stream = fs.createWriteStream(`src/${file}`);
   stream.once("open", () => {
     divisao.forEach((resultado) => {
-      // console.log("passou");
       stream.write(
         `Parâmetro: ${resultado.criterio} <===>  Resultado: ${resultado.divisao}\n`
       );
