@@ -10,7 +10,7 @@ export const tags = [];
 export const divisao = [];
 
 export function printMessage(type, text) {
-  console.log(`[${type}] ${text}`)
+  console.log(`[${type}] ${text}`);
 }
 
 /*
@@ -48,10 +48,7 @@ function validarTag(nome, descricao) {
           var segundoChar = pilha.pop();
           pilha.push(primeiroChar + descricao[i] + segundoChar);
         } else {
-          printMessage(
-            "ERROR",
-            "São necessarios pelo menos dois elementos."
-          );
+          printMessage("ERROR", "São necessarios pelo menos dois elementos.");
           return false;
         }
       } else {
@@ -138,7 +135,6 @@ export function salvarTags(file) {
   });
 }
 
-
 export function dividirTags(criterio) {
   var indice = [];
   tags.forEach((t) => {
@@ -152,7 +148,6 @@ export function dividirTags(criterio) {
   var continua = true;
   while (continua) {
     const resultado = [];
-    console.log("afn: ", AFN);
 
     AFN.forEach((automato, i) => {
       resultado.push({ pos: i, consome: validarSeConsome(automato, criterio) });

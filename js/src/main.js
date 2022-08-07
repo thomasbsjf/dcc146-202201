@@ -9,14 +9,13 @@ import {
   listarTagsValidas,
   dividirTags,
   tags,
-  printMessage
+  printMessage,
 } from "./tags.js";
 import { AFN } from "./automato.js";
-import { divisao } from "./tags.js"
+import { divisao } from "./tags.js";
 import lineReader from "line-reader";
 import inquirer from "inquirer";
 import fs from "fs";
-
 
 /*
   Função principal do programa, responsável por coordenar os comandos executados.
@@ -102,7 +101,6 @@ function main(restart) {
   }
 }
 
-
 /*
   Função responsável por listar todos os Automatos criados informando suas devidas
   Tags, Estados Iniciais e Finais, Alfabeto e transições realizadas.
@@ -116,7 +114,6 @@ function listarAutomatos() {
     console.log(`Estados Iniciais: ${AFN[i].estados.inicial}`);
     console.log(`Estados Finais: ${AFN[i].estados.final}`);
     console.log(`Alfabeto: ${AFN[i].alfabeto}`);
-    // console.log("teste AFN: ", AFN);
     console.log(`Transições: `);
     AFN[i].transicoes.forEach((transicao) => {
       console.log(
